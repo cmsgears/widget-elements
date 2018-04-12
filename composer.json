@@ -1,0 +1,19 @@
+{
+	"name": "cmsgears/widget-elements",
+	"description": "The Elements Widget for CMSGears. It provide widgets specific to dynamic elements.",
+	"homepage": "https://www.cmsgears.org",
+	"type": "package",
+	"keywords": [ "yii2", "cmsgears", "widget", "elements" ],
+	"license": "GPL-3.0-or-later",
+	"support": {
+		"resources": "https://www.cmsgears.org/"
+	},
+	"autoload": {
+		"psr-4": {
+			"cmsgears\\widgets\\elements\\": ""
+		}
+	},
+    "require": {
+        "cmsgears/module-cms": "*"
+    }
+}
