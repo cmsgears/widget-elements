@@ -1,5 +1,13 @@
 <?php
-namespace cmsgears\widgets\elements\nav;
+/**
+ * This file is part of CMSGears Framework. Please view License file distributed
+ * with the source code for license details.
+ *
+ * @link https://www.cmsgears.org/
+ * @copyright Copyright (c) 2015 VulpineCode Technologies Pvt. Ltd.
+ */
+
+namespace cmsgears\widgets\elements;
 
 // Yii Imports
 use Yii;
@@ -11,7 +19,14 @@ use cmsgears\cms\common\config\CmsGlobal;
 use cmsgears\cms\common\models\forms\Link;
 use cmsgears\cms\common\models\forms\PageLink;
 
-class Nav extends \cmsgears\widgets\nav\BasicNav {
+use cmsgears\widgets\nav\Nav as BaseNav;
+
+/**
+ * Nav widget dynamically show the menu model.
+ *
+ * @since 1.0.0
+ */
+class Nav extends BaseNav {
 
 	// Variables ---------------------------------------------------
 

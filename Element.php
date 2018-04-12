@@ -1,5 +1,13 @@
 <?php
-namespace cmsgears\widgets\text;
+/**
+ * This file is part of CMSGears Framework. Please view License file distributed
+ * with the source code for license details.
+ *
+ * @link https://www.cmsgears.org/
+ * @copyright Copyright (c) 2015 VulpineCode Technologies Pvt. Ltd.
+ */
+
+namespace cmsgears\widgets\elements;
 
 // Yii Imports
 use \Yii;
@@ -9,9 +17,14 @@ use yii\helpers\Html;
 use cmsgears\core\common\config\CoreGlobal;
 use cmsgears\cms\common\config\CmsGlobal;
 
-use cmsgears\cms\common\services\entities\WidgetService;
+use cmsgears\core\common\base\Widget;
 
-class TextWidget extends \cmsgears\core\common\base\Widget {
+/**
+ * Element widget dynamically show the element model.
+ *
+ * @since 1.0.0
+ */
+class Element extends Widget {
 
 	// Variables ---------------------------------------------------
 
@@ -95,5 +108,6 @@ class TextWidget extends \cmsgears\core\common\base\Widget {
 		}
 	}
 
-	// TextWidget ----------------------------
+	// Element -------------------------------
+
 }
