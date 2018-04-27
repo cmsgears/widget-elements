@@ -13,14 +13,14 @@ namespace cmsgears\widgets\elements;
 use Yii;
 
 // CMG Imports
-use cmsgears\widgets\block\Block as BaseBlock;
+use cmsgears\widgets\block\BasicBlock;
 
 /**
  * Block forms a part of page either vertically or horizontally.
  *
  * @since 1.0.0
  */
-class Block extends BaseBlock {
+class Block extends BasicBlock {
 
 	// Variables ---------------------------------------------------
 

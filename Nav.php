@@ -19,14 +19,14 @@ use cmsgears\cms\common\config\CmsGlobal;
 use cmsgears\cms\common\models\forms\Link;
 use cmsgears\cms\common\models\forms\PageLink;
 
-use cmsgears\widgets\nav\Nav as BaseNav;
+use cmsgears\widgets\nav\BasicNav;
 
 /**
  * Nav widget dynamically show the menu model.
  *
  * @since 1.0.0
  */
-class Nav extends BaseNav {
+class Nav extends BasicNav {
 
 	// Variables ---------------------------------------------------
 
