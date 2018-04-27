@@ -59,9 +59,9 @@ class Block extends BasicBlock {
 
 		$this->blockService	= Yii::$app->factory->get( 'blockService' );
 
-		$this->block 		= $this->blockService->getBySlug( $this->slug );
+		$this->block 		= $this->blockService->getFirstBySlug( $this->slug );
 
-		if( isset( $this->block ) && $this->block->active ) {
+		if( isset( $this->block ) && $this->block->isActive() ) {
 
 			if( strlen( $this->block->content ) > 0 ) {
 
@@ -102,7 +102,7 @@ class Block extends BasicBlock {
 
 	public function renderWidget( $config = [] ) {
 
-		if( isset( $this->block ) && $this->block->active ) {
+		if( isset( $this->block ) && $this->block->isActive() ) {
 
 			return parent::renderWidget( $config );
 		}
