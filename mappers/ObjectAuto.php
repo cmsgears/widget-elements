@@ -34,42 +34,43 @@ abstract class ObjectAuto extends ObjectMapper {
 	public $ctype;
 
 	// Search not required for auto-suggest
-	public $searchByType	= false;
+	public $searchByType = false;
 
-	public $levelList		= false;
+	public $levelList = false;
 
-	public $notes			= '<b>Notes</b>: Type in search box to filter objects and select the object to map.';
+	public $notes = '<b>Notes</b>: Type in search box to filter objects and select the object to map.';
 
-	public $showNotes		= true;
+	public $showNotes = true;
 
-	public $inputType		= 'none';
+	public $inputType = 'none';
 
-	public $template		= 'auto';
+	// Override default view path
+	public $template = 'auto';
 
-	public $mapperTemplate	= 'objectMapperTemplate';
+	public $mapperTemplate = 'objectMapperTemplate';
 
-	public $modelObjects	= [];
+	public $modelObjects = [];
 
 	// Application
-	public $app				= 'mapper';
+	public $app = 'mapper';
 
 	// Controller where mapping request need to be triggered
-	public $controller		= 'model';
+	public $controller = 'model';
 
 	// Controller action to handle the search request
-	public $action			= 'autoSearch';
+	public $action = 'autoSearch';
 
 	// Explicit URL to handle the controller search action request
-	public $actionUrl		= 'core/object/auto-search';
+	public $actionUrl = 'core/object/auto-search';
 
 	// Controller action to handle the mapping request
-	public $mapAction		= 'mapItem';
+	public $mapAction = 'mapItem';
 
 	// Explicit URL to handle the controller mapping action request
-	public $mapActionUrl	= null;
+	public $mapActionUrl = null;
 
 	// Controller action to handle the delete request
-	public $deleteAction	= 'deleteItem';
+	public $deleteAction = 'deleteItem';
 
 	// Explicit URL to handle the controller delete action request
 	public $deleteActionUrl	= null;

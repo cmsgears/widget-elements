@@ -33,14 +33,14 @@ class BlockAuto extends ObjectAuto {
 
 	// Public -----------------
 
-	public $type			= CmsGlobal::TYPE_BLOCK;
-	public $ctype			= CmsGlobal::TYPE_BLOCK;
+	public $type	= CmsGlobal::TYPE_BLOCK;
+	public $ctype	= CmsGlobal::TYPE_BLOCK;
 
-	public $mapperTemplate	= 'blockMapperTemplate';
+	public $mapperTemplate = 'blockMapperTemplate';
 
-	public $notes			= '<b>Notes</b>: Type in search box to filter blocks and select the block to map.';
+	public $notes = '<b>Notes</b>: Type in search box to filter blocks and select the block to map.';
 
-	public $actionUrl		= 'cms/block/auto-search';
+	public $actionUrl = 'cms/block/auto-search';
 
 	// Protected --------------
 

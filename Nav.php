@@ -16,9 +16,6 @@ use yii\helpers\Url;
 // CMG Imports
 use cmsgears\cms\common\config\CmsGlobal;
 
-use cmsgears\cms\common\models\forms\Link;
-use cmsgears\cms\common\models\forms\PageLink;
-
 use cmsgears\widgets\nav\BasicNav;
 
 /**
@@ -42,7 +39,7 @@ class Nav extends BasicNav {
 
 	// Public -----------------
 
-	public $slug	= 'main';
+	public $slug = 'main';
 
 	public $view;
 
@@ -85,86 +82,97 @@ class Nav extends BasicNav {
 		$menu 		= $this->menuService->getBySlugType( $this->slug, CmsGlobal::TYPE_MENU );
 		$pageSlug	= Yii::$app->request->get( 'slug' );
 
-		if( isset( $menu ) && $menu->active ) {
+		if( isset( $menu ) && $menu->isActive() ) {
 
-			$pageLinks		= $this->menuService->getPageLinks( $menu, true );
-			$pageLinks		= array_keys( $pageLinks );
-			$pages			= $this->pageService->getMenuPages( $pageLinks, true );
-			$menuItems		= $menu->generateObjectFromJson( true );
-			$menuItems		= $menuItems->links;
-			$absoluteUrl	= Yii::$app->request->absoluteUrl;
+			$links = $menu->activeLinks;
 
-			foreach ( $menuItems as $menuItem ) {
+			// Collect page ids
+			$pageIds = [];
 
-				if( strcmp( $menuItem[ 'type' ], CmsGlobal::TYPE_PAGE ) == 0 ) {
+			foreach( $links as $link ) {
 
-					$link		= new PageLink( $menuItem );
-					$item		= null;
-					$address	= null;
+				if( isset( $link->pageId ) ) {
 
-					if( isset( $pages[ $link->pageId ] ) ) {
+					$pageIds[] = $link->pageId;
+				}
+			}
 
-						$page	= $pages[ $link->pageId ];
+			// Get menu pages map
+			$pages		= $this->pageService->getMenuPages( $pageIds, true );
+			$baseUrl	= Yii::$app->request->absoluteUrl;
 
-						if( $page->isVisibilityPublic() || ( isset( $user ) ) ) {
+			// Generate Links
+			foreach( $links as $link ) {
 
-							if( strcmp( $page->slug, 'home' ) == 0 ) {
+				$item		= null;
+				$label		= empty( $link->title ) ? $link->name : $link->title;
+				$icon		= $link->icon;
+				$address	= null;
 
-								$address	= Url::toRoute( [ "/" ] );
-							}
-							else {
+				if( isset( $link->pageId ) ) {
 
-								$address	= Url::toRoute( [ "/$page->slug" ] );
-							}
+					$page	= $pages[ $link->pageId ];
+					$label	= empty( $link->title ) ? $page->name : $link->title;
+					$icon	= $link->icon ?? $page->icon;
 
-							$item		= [ 'url' => $address, 'label' => $page->name, 'icon' => $page->icon ];
+					if( $page->isVisibilityPublic() || ( isset( $user ) ) ) {
 
-							if( isset( $link->htmlOptions ) ) {
+						if( strcmp( $page->slug, 'home' ) == 0 ) {
 
-								$item[ 'options' ] = json_decode( $link->htmlOptions, true );
-							}
-
-							if( isset( $link->urlOptions ) ) {
-
-								$item[ 'urlOptions' ] = json_decode( $link->urlOptions, true );
-							}
-
-							if( isset( $pageSlug ) && strcmp( $pageSlug, $page->slug ) == 0 ) {
-
-								$item[ 'options' ] = [ 'class' => 'active' ];
-							}
-
-							$this->items[]	= $item;
+							$address = Url::toRoute( [ "/" ] );
 						}
+						else {
+
+							$address = Url::toRoute( [ "/$page->slug" ] );
+						}
+
+						$item = [ 'url' => $address, 'label' => $label, 'icon' => $icon ];
+
+						if( isset( $link->htmlOptions ) ) {
+
+							$item[ 'options' ] = json_decode( $link->htmlOptions, true );
+						}
+
+						if( isset( $link->urlOptions ) ) {
+
+							$item[ 'urlOptions' ] = json_decode( $link->urlOptions, true );
+						}
+
+						if( isset( $pageSlug ) && strcmp( $pageSlug, $page->slug ) == 0 ) {
+
+							$item[ 'options' ] = [ 'class' => 'active' ];
+						}
+
+						$this->items[] = $item;
 					}
 				}
-				else if( strcmp( $menuItem[ 'type' ], CmsGlobal::TYPE_LINK ) == 0 ) {
+				else {
 
-					$link		= new Link( $menuItem );
 					$item		= null;
 					$address	= null;
+					$urlOptions	= [];
 
-					if( strlen( $link->label ) > 0 ) {
+					if( strlen( $label ) > 0 ) {
 
-						if( $link->isPublic() || ( isset( $user ) ) ) {
+						if( !$link->user || ( isset( $user ) ) ) {
 
-							if( $link->relative ) {
+							if( $link->absolute ) {
 
-								// Clean URL if first character is slash
-								if( substr( $link->address, 0, 1 ) == "/" ) {
-
-									$link->address	= substr( $link->address, 1 );
-								}
-
-								$address	= Url::toRoute( [ "/$link->address" ], true );
+								$address	= $link->url;
+								$urlOptions	= [ 'target' => '_blank' ];
 							}
 							else {
 
-								$address			= $link->address;
-                                $link->urlOptions  	= json_encode( [ 'target' => '_blank' ] );
+								// Clean URL if first character is slash
+								if( substr( $link->url, 0, 1 ) == '/' ) {
+
+									$link->url = substr( $link->url, 1 );
+								}
+
+								$address = Url::toRoute( [ "/$link->url" ], true );
 							}
 
-							$item		= [ 'url' => $address, 'label' => $link->label, 'icon' => $link->icon ];
+							$item = [ 'url' => $address, 'label' => $label, 'icon' => $link->icon ];
 
 							if( isset( $link->htmlOptions ) ) {
 
@@ -175,13 +183,17 @@ class Nav extends BasicNav {
 
 								$item[ 'urlOptions' ] = json_decode( $link->urlOptions, true );
 							}
+							else {
 
-							if( strcmp( $address, $absoluteUrl ) == 0 ) {
+								$item[ 'urlOptions' ] = $urlOptions;
+							}
+
+							if( strcmp( $address, $baseUrl ) == 0 ) {
 
 								$item[ 'options' ] = [ 'class' => 'active' ];
 							}
 
-							$this->items[]	= $item;
+							$this->items[] = $item;
 						}
 					}
 				}
@@ -192,4 +204,5 @@ class Nav extends BasicNav {
     }
 
 	// DynamicNav ----------------------------
+
 }

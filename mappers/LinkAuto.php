@@ -9,9 +9,6 @@
 
 namespace cmsgears\widgets\elements\mappers;
 
-// CMG Imports
-use cmsgears\cms\common\config\CmsGlobal;
-
 /**
  * LinkAuto maps links to models using auto-suggest.
  *
@@ -33,13 +30,13 @@ class LinkAuto extends ObjectAuto {
 
 	// Public -----------------
 
-	public $type			= null;
+	public $type = null;
 
-	public $mapperTemplate	= 'linkMapperTemplate';
+	public $mapperTemplate = 'linkMapperTemplate';
 
-	public $notes			= '<b>Notes</b>: Type in search box to filter links and select the link to map.';
+	public $notes = '<b>Notes</b>: Type in search box to filter links and select the link to map.';
 
-	public $actionUrl		= 'cms/link/auto-search';
+	public $actionUrl = 'cms/link/auto-search';
 
 	// Protected --------------
 

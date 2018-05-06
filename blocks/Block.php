@@ -7,7 +7,7 @@
  * @copyright Copyright (c) 2015 VulpineCode Technologies Pvt. Ltd.
  */
 
-namespace cmsgears\widgets\elements;
+namespace cmsgears\widgets\elements\blocks;
 
 // Yii Imports
 use Yii;
@@ -36,8 +36,6 @@ class Block extends BasicBlock {
 
 	// Public -----------------
 
-	public $templateDir	= '@cmsgears/widget-elements/views/block';
-
 	public $slug;
 
 	public $block;
@@ -59,21 +57,21 @@ class Block extends BasicBlock {
 
 		$this->blockService	= Yii::$app->factory->get( 'blockService' );
 
-		$this->block 		= $this->blockService->getFirstBySlug( $this->slug );
+		$this->block = $this->blockService->getFirstBySlug( $this->slug );
 
 		if( isset( $this->block ) && $this->block->isActive() ) {
 
 			if( strlen( $this->block->content ) > 0 ) {
 
-				$this->contentData		= $this->block->content;
+				$this->contentData = $this->block->content;
 			}
 
-			$banner		= $this->block->banner;
-			$video      = $this->block->video;
+			$banner	= $this->block->banner;
+			$video	= $this->block->video;
 
 			if( isset( $banner ) ) {
 
-				$this->bkgUrl	= $banner->getFileUrl();
+				$this->bkgUrl = $banner->getFileUrl();
 			}
 
 			if( isset( $video ) ) {
@@ -108,6 +106,6 @@ class Block extends BasicBlock {
 		}
 	}
 
-	// DynamicBlock --------------------------
+	// Block ---------------------------------
 
 }

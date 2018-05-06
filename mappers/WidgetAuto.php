@@ -33,14 +33,14 @@ class WidgetAuto extends ObjectAuto {
 
 	// Public -----------------
 
-	public $type			= CmsGlobal::TYPE_WIDGET;
-	public $ctype			= CmsGlobal::TYPE_WIDGET;
+	public $type	= CmsGlobal::TYPE_WIDGET;
+	public $ctype	= CmsGlobal::TYPE_WIDGET;
 
 	public $mapperTemplate	= 'widgetMapperTemplate';
 
-	public $notes			= '<b>Notes</b>: Type in search box to filter widgets and select the widget to map.';
+	public $notes = '<b>Notes</b>: Type in search box to filter widgets and select the widget to map.';
 
-	public $actionUrl		= 'cms/block/auto-search';
+	public $actionUrl = 'cms/block/auto-search';
 
 	// Protected --------------
 

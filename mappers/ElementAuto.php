@@ -33,14 +33,14 @@ class ElementAuto extends ObjectAuto {
 
 	// Public -----------------
 
-	public $type			= CmsGlobal::TYPE_ELEMENT;
-	public $ctype			= CmsGlobal::TYPE_ELEMENT;
+	public $type	= CmsGlobal::TYPE_ELEMENT;
+	public $ctype	= CmsGlobal::TYPE_ELEMENT;
 
-	public $mapperTemplate	= 'elementMapperTemplate';
+	public $mapperTemplate = 'elementMapperTemplate';
 
-	public $notes			= '<b>Notes</b>: Type in search box to filter elements and select the element to map.';
+	public $notes = '<b>Notes</b>: Type in search box to filter elements and select the element to map.';
 
-	public $actionUrl		= 'cms/element/auto-search';
+	public $actionUrl = 'cms/element/auto-search';
 
 	// Protected --------------
 

@@ -40,41 +40,37 @@ class ObjectMapper extends Widget {
 	// Public -----------------
 
 	// Object models
-	public $objects			= [];
+	public $objects = [];
 
 	// Type to be used to search objects for mapping.
-	public $type			= CoreGlobal::TYPE_SYSTEM;
+	public $type = CoreGlobal::TYPE_SYSTEM;
 
-	public $parentType		= null;
+	public $parentType = null;
 
 	// Flag to search object for given type in case object models not provided or empty.
-	public $searchByType	= true;
+	public $searchByType = true;
 
 	// The model using Object Trait
 	public $model;
 
-	public $binderModel		= 'ObjectBinder';
-	public $mapToColumn		= false;
-	public $columnName		= null;
+	public $binderModel	= 'ObjectBinder';
+	public $mapToColumn	= false;
+	public $columnName	= null;
 
 	// Notes to help user in choosing objects.
-	public $notes			= '<b>Notes</b>: Choose at least one object to map.';
+	public $notes = '<b>Notes</b>: Choose at least one object to map.';
 
 	// Flag to show notes
-	public $showNotes		= true;
+	public $showNotes = true;
 
 	// Input type among checkbox, radio to render the chooser.
-	public $inputType		= 'checkbox';
+	public $inputType = 'checkbox';
 
 	// Disable all the rendered objects.
-	public $disabled		= false;
-
-	// Override default view path
-	public $templateDir		= '@cmsgears/widget-elements/views/object';
-	public $template		= 'default';
+	public $disabled = false;
 
 	// Serach using model object service instead of trait
-	public $service			= false;
+	public $service = false;
 
 	// Protected --------------
 
