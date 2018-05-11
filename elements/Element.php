@@ -38,6 +38,44 @@ class Element extends ObjectWidget {
 
 	// Public -----------------
 
+	public $options = [ 'class' => 'box' ];
+
+	// Background
+	public $bkg			= false;
+	public $bkgUrl		= null;
+	public $bkgClass	= null;
+
+	// Texture
+	public $texture			= false;
+	public $textureClass	= null;
+
+	// Max cover on top of block content
+	public $maxCover		= false;
+	public $maxCoverContent	= null;
+	public $maxCoverClass	= null;
+
+	// Block Header
+	public $header			= false;
+	public $headerIcon		= false;
+	public $headerIconClass	= null;
+	public $headerIconUrl	= null;
+	public $headerTitle		= null;
+	public $headerInfo		= null;
+	public $headerContent	= null;
+
+	// Block Content
+	public $content		= false;
+	public $contentData	= '';
+
+	// Block Footer
+	public $footer			= false;
+	public $footerIcon		= false;
+	public $footerIconClass	= null;
+	public $footerIconUrl	= null;
+	public $footerTitle		= null;
+	public $footerInfo		= null;
+	public $footerContent	= null;
+
 	// Protected --------------
 
 	// Private ----------------
@@ -65,11 +103,29 @@ class Element extends ObjectWidget {
 			// Find Model
 			$this->model = $this->modelService->getBySlugType( $this->slug, CmsGlobal::TYPE_ELEMENT );
 		}
+
+		if( $this->buffer ) {
+
+			ob_start();
+
+			ob_implicit_flush( false );
+		}
     }
 
 	// CMG interfaces ------------------------
 
 	// CMG parent classes --------------------
+
+    public function renderWidget( $config = [] ) {
+
+		// Default background class defined in css as - .bkg-element { background-image: url(<image url>) }
+		if( $this->bkg && !isset( $this->bkgUrl ) && !isset( $this->bkgClass ) ) {
+
+			$this->bkgClass	= 'bkg-element';
+		}
+
+		return parent::renderWidget( $config );
+    }
 
 	// Element -------------------------------
 

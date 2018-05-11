@@ -11,6 +11,7 @@ namespace cmsgears\widgets\elements\base;
 
 // Yii Imports
 use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
 
 // CMG Imports
 use cmsgears\core\common\base\Widget;
@@ -36,21 +37,14 @@ abstract class ObjectWidget extends Widget {
 
 	// Public -----------------
 
+	public $wrap = true;
+
 	/**
 	 * The slug uniquely identity the model.
 	 *
 	 * @var string
 	 */
 	public $slug;
-
-	/**
-	 * Check whether template mapped to model must be overridden by widget template.
-	 * If it's set to true, the template defined in database will be ignored. The widget
-	 * template will also be used in absence of database template.
-	 *
-	 * @var boolean
-	 */
-	public $forceTemplate;
 
 	/**
 	 * Check whether default avatar can be used in absence of model banner.
@@ -77,7 +71,7 @@ abstract class ObjectWidget extends Widget {
 	 *
 	 * @var Object
 	 */
-	public $data;
+	public $modelData;
 
 	// Protected --------------
 
@@ -115,27 +109,33 @@ abstract class ObjectWidget extends Widget {
 
 		if( isset( $this->model ) && $this->model->isActive() && $this->model->isVisible() ) {
 
-			$template	= $this->model->template;
-			$this->data	= json_decode(  $this->model->data ); // Load json object
+			// Model Template
+			$template = $this->model->template;
 
-			// Use templates defined in DB by Site Admin
-			if( $this->forceTemplate && isset( $template ) ) {
+			// Model Data
+			$this->modelData = json_decode( $this->model->data );
 
-				// TODO: Render using DB Template
+			// Use template defined by Admin
+			if( isset( $template ) && $template->fileRender ) {
+
+				$this->templateDir	= $template->viewPath;
+				$this->template		= $template->view;
 			}
-			else {
 
-				// Pass model and data to widget view
-				$widgetHtml = $this->render( $this->template, [ 'widget' => $this ] );
+			// Pass model and data to widget view
+			$widgetHtml = $this->render( $this->template, [ 'widget' => $this ] );
 
-				// Wrap the view
-				if( $this->wrap ) {
+			// Wrap the view
+			if( $this->wrap ) {
 
-					return Html::tag( $this->wrapper, $widgetHtml, $this->options );
-				}
+				$htmlOptions = json_decode( $this->model->htmlOptions, true );
 
-				return $widgetHtml;
+				$options = !empty( $this->model->htmlOptions ) ? ArrayHelper::merge( $this->options, $htmlOptions ) : $this->options;
+
+				return Html::tag( $this->wrapper, $widgetHtml, $options );
 			}
+
+			return $widgetHtml;
 		}
 	}
 

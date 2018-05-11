@@ -1,53 +1,158 @@
-<!-- Block Background -->
-<?php if( $widget->bkg ) { ?>
-	<div class="block-bkg <?= $widget->bkgClass ?>" <?php if( isset( $widget->bkgUrl ) ) echo "style=\"background-image:url($widget->bkgUrl);\"" ?>></div>
+<?php
+// Yii Imports
+use yii\helpers\ArrayHelper;
+
+// CMG Imports
+use cmsgears\core\frontend\config\SiteProperties;
+
+use cmsgears\widgets\elements\elements\Element;
+
+use cmsgears\core\common\utilities\CodeGenUtil;
+
+$model	= $widget->model;
+$data	= $widget->modelData;
+
+// Admin Settings - Override widget settings to be controllable from admin.
+$settings	= $data->settings ?? null;
+
+$bkg			= $settings->bkg ?? $widget->bkg;
+$fixedBkg		= $settings->fixedBkg ?? $widget->fixedBkg;
+$scrollBkg		= $settings->scrollBkg ?? $widget->scrollBkg;
+$parallaxBkg	= $settings->parallaxBkg ?? $widget->parallaxBkg;
+$bkgClass		= $settings->bkgClass ?? $widget->bkgClass;
+
+$texture		= $settings->texture ?? $widget->texture;
+$textureClass	= !empty( $model->texture ) ? $model->texture : "texture $widget->textureClass";
+
+$maxCover			= $settings->maxCover ?? $widget->maxCover;
+$maxCoverClass		= $settings->maxCoverClass ?? $widget->maxCoverClass;
+$maxCoverContent	= $settings->maxCoverContent ?? $widget->maxCoverContent;
+
+$header				= $settings->header ?? $widget->header;
+$headerIcon			= $settings->headerIcon ?? $widget->headerIcon;
+$headerIconClass	= !empty( $model->icon ) ? $model->icon : $widget->headerIconClass;
+$headerIconUrl		= $settings->headerIconUrl ?? $widget->headerIconUrl;
+$headerTitle		= !empty( $model->title ) ? $model->title : ( !empty( $model->name ) ? $model->name : $widget->headerTitle );
+$headerInfo			= !empty( $model->description ) ? $model->description : $widget->headerInfo;
+$headerContent		= !empty( $model->summary ) ? $model->summary : $widget->headerContent;
+
+$content			= $settings->content ?? $widget->content;
+$contentData		= !empty( $model->content ) ? $model->content : $widget->contentData;
+
+$footer				= $settings->footer ?? $widget->footer;
+$footerIcon			= $settings->footerIcon ?? $widget->footerIcon;
+$footerIconClass	= $settings->footerIconClass ?? $widget->footerIconClass;
+$footerIconUrl		= $settings->footerIconUrl ?? $widget->footerIconUrl;
+$footerTitle		= $settings->footerTitle ?? $model->name ?? $widget->footerTitle;
+$footerInfo			= $settings->footerInfo ?? $widget->footerInfo;
+$footerContent		= $settings->footerContent ?? $widget->footerContent;
+
+$elements			= $settings->elements ?? $widget->elements;
+$elementType		= $settings->elementType ?? $widget->elementType;
+
+$avatar		= $widget->defaultAvatar ? SiteProperties::getInstance()->getDefaultAvatar() : null;
+$avatarUrl	= CodeGenUtil::getFileUrl( $model->avatar, [ 'image' => $avatar ] );
+
+$banner		= $widget->defaultBanner ? SiteProperties::getInstance()->getDefaultBanner() : null;
+$bannerUrl	= CodeGenUtil::getFileUrl( $model->banner, [ 'image' => $banner ] );
+$bkgUrl		= $bannerUrl ?? $widget->bkgUrl;
+?>
+
+<?php if( !empty( $bkgUrl ) ) { ?>
+	<?php if( $bkg ) { ?>
+		<div class="block-bkg <?= $bkgClass ?>" <?= "style=\"background-image:url($bkgUrl);\"" ?>></div>
+	<?php } ?>
+
+	<?php if( $fixedBkg ) { ?>
+		<div class="block-bkg-fixed <?= $bkgClass ?>" <?= "style=\"background-image:url($bkgUrl);\"" ?>></div>
+	<?php } ?>
+
+	<?php if( $scrollBkg ) { ?>
+		<div class="block-bkg-scroll <?= $bkgClass ?>" <?= "style=\"background-image:url($bkgUrl);\"" ?>></div>
+	<?php } ?>
+
+	<?php if( $parallaxBkg ) { ?>
+		<div class="block-bkg-parallax <?= $bkgClass ?>" <?= "style=\"background-image:url($bkgUrl);\"" ?>></div>
+	<?php } ?>
 <?php } ?>
 
-<?php if( $widget->fixedBkg ) { ?>
-	<div class="block-bkg-fixed <?= $widget->bkgClass ?>" <?php if( isset( $widget->bkgUrl ) ) echo "style=\"background-image:url($widget->bkgUrl);\"" ?>></div>
+<?php if( $texture ) { ?>
+	<div class="<?= $textureClass ?>"></div>
 <?php } ?>
 
-<?php if( $widget->scrollBkg ) { ?>
-	<div class="block-bkg-scroll <?= $widget->bkgClass ?>" <?php if( isset( $widget->bkgUrl ) ) echo "style=\"background-image:url($widget->bkgUrl);\"" ?>></div>
+<?php if( $maxCover ) { ?>
+	<div class="max-cover <?= $maxCoverClass ?>">
+		<?= $maxCoverContent ?>
+	</div>
 <?php } ?>
 
-<?php if( $widget->parallaxBkg ) { ?>
-	<div class="block-bkg-parallax <?= $widget->bkgClass ?>" <?php if( isset( $widget->bkgUrl ) ) echo "style=\"background-image:url($widget->bkgUrl);\"" ?>></div>
-<?php } ?>
-
-<!-- Block Texture -->
-<?php if( $widget->texture ) { ?>
-	<div class="texture <?= $widget->textureClass ?>" <?php if( isset( $widget->textureUrl ) ) echo "style=\"background-image:url($widget->textureUrl);\"" ?>></div>
-<?php } ?>
-
-<!-- Block Max Cover -->
-<?php if( $widget->maxCover ) { ?>
-	<div class="max-cover <?= $widget->maxCoverClass ?>"><?= $widget->maxCoverContent ?></div>
-<?php } ?>
-
-<!-- Content Wrapper -->
-<div class="block-content-wrap <?= $widget->contentWrapClass ?>">
-
-	<!-- Content Header -->
-	<?php if( $widget->header ) { ?>
-		<div class="block-header <?=  $widget->headerClass ?>">
-			<?php if( $widget->icon && strlen( $widget->iconClass ) > 0 ) { ?>
-				<div class="wrap-icon"><i class="<?= $widget->iconClass ?>"></i></div>
+<div class="block-content-wrap">
+	<?php if( $header ) { ?>
+		<div class="block-header">
+			<?php if( $headerIcon && !empty( $headerIconClass ) ) { ?>
+				<div class="block-header-icon"><i class="<?= $headerIconClass ?>"></i></div>
 			<?php } ?>
-			<?php if( $widget->icon && strlen( $widget->iconImage ) > 0 ) { ?>
-				<div class="wrap-icon"><img src="<?= $widget->iconImage ?>" /></div>
+			<?php if( $headerIcon && !empty( $headerIconUrl ) ) { ?>
+				<div class="block-header-icon"><img src="<?= $headerIconUrl ?>" /></div>
 			<?php } ?>
-			<div class="block-header-content"><?= $widget->headerContent ?></div>
+			<?php if( !empty( $headerTitle ) ) { ?>
+				<div class="block-header-title"><?= $headerTitle ?></div>
+			<?php } ?>
+			<?php if( !empty( $headerInfo ) ) { ?>
+				<div class="block-header-info"><?= $headerInfo ?></div>
+			<?php } ?>
+			<?php if( !empty( $headerContent ) ) { ?>
+				<div class="block-header-content"><?= $headerContent ?></div>
+			<?php } ?>
 		</div>
 	<?php } ?>
 
-	<?php if( isset( $widget->content ) ) { ?>
-		<div class="block-content <?= $widget->contentClass ?>">
-			<?= $widget->contentData ?>
+	<?php if( isset( $content ) ) { ?>
+		<div class="block-content">
+			<?= $contentData ?>
+			<?php if( isset( $widget->buffer ) ) { ?>
+				<?= $widget->bufferData ?>
+			<?php } ?>
+
+			<?php if( $elements ) { ?>
+				<div class="block-box-wrap">
+					<?php
+						$elements = $model->elements;
+
+						if( !empty( $elementType ) ) {
+
+							$telements	= Yii::$app->factory->get( 'elementService' )->getByType( $elementType );
+							$elements	= ArrayHelper::merge( $elements, $telements );
+						}
+
+						foreach( $elements as $element ) {
+
+							echo Element::widget( [ 'model' => $element ] );
+						}
+					?>
+				</div>
+			<?php } ?>
+
 		</div>
 	<?php } ?>
 
-	<?php if( isset( $widget->extraContent ) ) { ?>
-		<?= $widget->extraContent ?>
+	<?php if( $footer ) { ?>
+		<div class="block-footer">
+			<?php if( $footerIcon && !empty( $footerIconClass ) ) { ?>
+				<div class="block-footer-icon"><i class="<?= $footerIconClass ?>"></i></div>
+			<?php } ?>
+			<?php if( $footerIcon && !empty( $footerIconUrl ) ) { ?>
+				<div class="block-footer-icon"><img src="<?= $footerIconUrl ?>" /></div>
+			<?php } ?>
+			<?php if( !empty( $footerTitle ) ) { ?>
+				<div class="block-footer-title"><?= $footerTitle ?></div>
+			<?php } ?>
+			<?php if( !empty( $footerInfo ) ) { ?>
+				<div class="block-footer-info"><?= $footerInfo ?></div>
+			<?php } ?>
+			<?php if( !empty( $footerContent ) ) { ?>
+				<div class="block-footer-content"><?= $footerContent ?></div>
+			<?php } ?>
+		</div>
 	<?php } ?>
 </div>

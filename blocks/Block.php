@@ -13,14 +13,16 @@ namespace cmsgears\widgets\elements\blocks;
 use Yii;
 
 // CMG Imports
-use cmsgears\widgets\block\BasicBlock;
+use cmsgears\cms\common\config\CmsGlobal;
+
+use cmsgears\widgets\elements\base\ObjectWidget;
 
 /**
- * Block forms a part of page either vertically or horizontally.
+ * Block widget dynamically show the block model.
  *
  * @since 1.0.0
  */
-class Block extends BasicBlock {
+class Block extends ObjectWidget {
 
 	// Variables ---------------------------------------------------
 
@@ -36,14 +38,52 @@ class Block extends BasicBlock {
 
 	// Public -----------------
 
-	public $slug;
+	public $options = [ 'class' => 'block' ];
 
-	public $block;
-	public $videoUrl;
+	// Background
+	public $bkg			= false;
+	public $fixedBkg	= false;
+	public $scrollBkg	= false;
+	public $parallaxBkg	= false;
+	public $bkgUrl		= null;
+	public $bkgClass	= null;
+
+	// Texture
+	public $texture			= false;
+	public $textureClass	= null;
+
+	// Max cover on top of block content
+	public $maxCover		= false;
+	public $maxCoverContent	= null;
+	public $maxCoverClass	= null;
+
+	// Block Header
+	public $header			= false;
+	public $headerIcon		= false;
+	public $headerIconClass	= null;
+	public $headerIconUrl	= null;
+	public $headerTitle		= null;
+	public $headerInfo		= null;
+	public $headerContent	= null;
+
+	// Block Content
+	public $content		= false;
+	public $contentData	= '';
+
+	// Block Footer
+	public $footer			= false;
+	public $footerIcon		= false;
+	public $footerIconClass	= null;
+	public $footerIconUrl	= null;
+	public $footerTitle		= null;
+	public $footerInfo		= null;
+	public $footerContent	= null;
+
+	// Block Elements
+	public $elements		= false;
+	public $elementType		= null;
 
 	// Protected --------------
-
-	protected $blockService;
 
 	// Private ----------------
 
@@ -55,34 +95,19 @@ class Block extends BasicBlock {
 
         parent::init();
 
-		$this->blockService	= Yii::$app->factory->get( 'blockService' );
+		$this->modelService = Yii::$app->factory->get( 'blockService' );
 
-		$this->block = $this->blockService->getFirstBySlug( $this->slug );
+		if( isset( $this->slug ) ) {
 
-		if( isset( $this->block ) && $this->block->isActive() ) {
+			// Find Model
+			$this->model = $this->modelService->getBySlugType( $this->slug, CmsGlobal::TYPE_BLOCK );
+		}
 
-			if( strlen( $this->block->content ) > 0 ) {
+		if( $this->buffer ) {
 
-				$this->contentData = $this->block->content;
-			}
+			ob_start();
 
-			$banner	= $this->block->banner;
-			$video	= $this->block->video;
-
-			if( isset( $banner ) ) {
-
-				$this->bkgUrl = $banner->getFileUrl();
-			}
-
-			if( isset( $video ) ) {
-
-				$this->videoUrl	= $video->getFileUrl();
-			}
-
-			$this->iconClass		= $this->block->icon;
-			$this->title			= $this->block->title;
-			$this->headerContent	= $this->title;
-			$this->description		= $this->block->description;
+			ob_implicit_flush( false );
 		}
     }
 
@@ -98,13 +123,16 @@ class Block extends BasicBlock {
 
 	// CMG parent classes --------------------
 
-	public function renderWidget( $config = [] ) {
+    public function renderWidget( $config = [] ) {
 
-		if( isset( $this->block ) && $this->block->isActive() ) {
+		// Default background class defined in css as - .bkg-block { background-image: url(<image url>) }
+		if( $this->bkg && !isset( $this->bkgUrl ) && !isset( $this->bkgClass ) ) {
 
-			return parent::renderWidget( $config );
+			$this->bkgClass	= 'bkg-block';
 		}
-	}
+
+		return parent::renderWidget( $config );
+    }
 
 	// Block ---------------------------------
 
