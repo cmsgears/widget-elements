@@ -64,6 +64,8 @@ class Element extends ObjectWidget {
 	public $headerContent	= null;
 
 	// Block Content
+	public $description	= false;
+	public $summary		= false;
 	public $content		= false;
 	public $contentData	= '';
 

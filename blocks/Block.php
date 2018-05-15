@@ -67,8 +67,13 @@ class Block extends ObjectWidget {
 	public $headerContent	= null;
 
 	// Block Content
-	public $content		= false;
-	public $contentData	= '';
+	public $description		= false;
+	public $summary			= false;
+	public $content			= false;
+	public $contentData		= null;
+	public $contentClass		= null;
+	public $contentDataClass	= null;
+	public $boxWrapClass		= null;
 
 	// Block Footer
 	public $footer			= false;
