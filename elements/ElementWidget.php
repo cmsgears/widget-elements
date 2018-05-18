@@ -7,7 +7,7 @@
  * @copyright Copyright (c) 2015 VulpineCode Technologies Pvt. Ltd.
  */
 
-namespace cmsgears\widgets\elements\blocks;
+namespace cmsgears\widgets\elements\elements;
 
 // Yii Imports
 use Yii;
@@ -18,11 +18,11 @@ use cmsgears\cms\common\config\CmsGlobal;
 use cmsgears\widgets\elements\base\ObjectWidget;
 
 /**
- * Block widget dynamically show the block model.
+ * ElementWidget dynamically show the element model.
  *
  * @since 1.0.0
  */
-class Block extends ObjectWidget {
+class ElementWidget extends ObjectWidget {
 
 	// Variables ---------------------------------------------------
 
@@ -38,13 +38,10 @@ class Block extends ObjectWidget {
 
 	// Public -----------------
 
-	public $options = [ 'class' => 'block' ];
+	public $options = [ 'class' => 'box' ];
 
 	// Background
 	public $bkg			= false;
-	public $fixedBkg	= false;
-	public $scrollBkg	= false;
-	public $parallaxBkg	= false;
 	public $bkgUrl		= null;
 	public $bkgClass	= null;
 
@@ -67,13 +64,10 @@ class Block extends ObjectWidget {
 	public $headerContent	= null;
 
 	// Block Content
-	public $description		= false;
-	public $summary			= false;
-	public $content			= false;
-	public $contentData		= null;
-	public $contentClass		= null;
-	public $contentDataClass	= null;
-	public $boxWrapClass		= null;
+	public $description	= false;
+	public $summary		= false;
+	public $content		= false;
+	public $contentData	= '';
 
 	// Block Footer
 	public $footer			= false;
@@ -84,10 +78,6 @@ class Block extends ObjectWidget {
 	public $footerInfo		= null;
 	public $footerContent	= null;
 
-	// Block Elements
-	public $elements		= false;
-	public $elementType		= null;
-
 	// Protected --------------
 
 	// Private ----------------
@@ -96,16 +86,24 @@ class Block extends ObjectWidget {
 
 	// Constructor and Initialisation ------------------------------
 
+	// Instance methods --------------------------------------------
+
+	// Yii interfaces ------------------------
+
+	// Yii parent classes --------------------
+
+	// yii\base\Widget --------
+
     public function init() {
 
         parent::init();
 
-		$this->modelService = Yii::$app->factory->get( 'blockService' );
+		$this->modelService = Yii::$app->factory->get( 'elementService' );
 
 		if( isset( $this->slug ) ) {
 
 			// Find Model
-			$this->model = $this->modelService->getBySlugType( $this->slug, CmsGlobal::TYPE_BLOCK );
+			$this->model = $this->modelService->getBySlugType( $this->slug, CmsGlobal::TYPE_ELEMENT );
 		}
 
 		if( $this->buffer ) {
@@ -116,29 +114,21 @@ class Block extends ObjectWidget {
 		}
     }
 
-	// Instance methods --------------------------------------------
-
-	// Yii interfaces ------------------------
-
-	// Yii parent classes --------------------
-
-	// yii\base\Widget --------
-
 	// CMG interfaces ------------------------
 
 	// CMG parent classes --------------------
 
     public function renderWidget( $config = [] ) {
 
-		// Default background class defined in css as - .bkg-block { background-image: url(<image url>) }
+		// Default background class defined in css as - .bkg-element { background-image: url(<image url>) }
 		if( $this->bkg && !isset( $this->bkgUrl ) && !isset( $this->bkgClass ) ) {
 
-			$this->bkgClass	= 'bkg-block';
+			$this->bkgClass	= 'bkg-element';
 		}
 
 		return parent::renderWidget( $config );
     }
 
-	// Block ---------------------------------
+	// Element -------------------------------
 
 }

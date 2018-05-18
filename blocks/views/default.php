@@ -16,7 +16,7 @@ use yii\helpers\ArrayHelper;
 // CMG Imports
 use cmsgears\core\frontend\config\SiteProperties;
 
-use cmsgears\widgets\elements\elements\Element;
+use cmsgears\widgets\elements\elements\ElementWidget;
 
 use cmsgears\core\common\utilities\CodeGenUtil;
 
@@ -148,7 +148,7 @@ $bkgUrl		= $bannerUrl ?? $widget->bkgUrl;
 
 						foreach( $elements as $element ) {
 
-							echo Element::widget( [ 'model' => $element ] );
+							echo ElementWidget::widget( [ 'model' => $element ] );
 						}
 					?>
 				</div>
