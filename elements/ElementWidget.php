@@ -49,12 +49,12 @@ class ElementWidget extends ObjectWidget {
 	public $texture			= false;
 	public $textureClass	= null;
 
-	// Max cover on top of block content
+	// Max cover on top of content
 	public $maxCover		= false;
 	public $maxCoverContent	= null;
 	public $maxCoverClass	= null;
 
-	// Block Header
+	// Header
 	public $header			= false;
 	public $headerIcon		= false;
 	public $headerIconClass	= null;
@@ -63,13 +63,17 @@ class ElementWidget extends ObjectWidget {
 	public $headerInfo		= null;
 	public $headerContent	= null;
 
-	// Block Content
-	public $description	= false;
-	public $summary		= false;
-	public $content		= false;
-	public $contentData	= '';
+	// Content
+	public $content			= false;
+	public $contentTitle	= null;
+	public $contentInfo		= null;
+	public $contentSummary	= null;
+	public $contentData		= null;
 
-	// Block Footer
+	public $contentClass		= null;
+	public $contentDataClass	= null;
+
+	// Footer
 	public $footer			= false;
 	public $footerIcon		= false;
 	public $footerIconClass	= null;

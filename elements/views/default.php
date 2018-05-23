@@ -1,15 +1,4 @@
 <?php
-/* Template Notes *********************
- * 1. Element icon as header icon.
- * 2. Element avatar as header icon. Alternative to element icon.
- * 3. Element title as header title.
- * 4. Element description as header info.
- * 5. Element summary as header content.
- * 6. Element content as content data.
- * 7. Element banner as background image.
- **************************************
- */
-
 // CMG Imports
 use cmsgears\core\frontend\config\SiteProperties;
 use cmsgears\core\common\utilities\CodeGenUtil;
@@ -20,29 +9,49 @@ $data	= $widget->modelData;
 // Admin Settings - Override widget settings to be controllable from admin.
 $settings = $data->settings ?? null;
 
+// Header -------------------
+
 $header				= $settings->header ?? $widget->header;
 $headerIcon			= $settings->headerIcon ?? $widget->headerIcon;
 $headerIconClass	= !empty( $model->icon ) ? $model->icon : $widget->headerIconClass;
-$headerTitle		= !empty( $model->title ) ? $model->title : ( !empty( $model->name ) ? $model->name : $widget->headerTitle );
-$headerInfo			= !empty( $model->description ) ? $model->description : $widget->headerInfo;
-$headerContent		= !empty( $model->summary ) ? $model->summary : $widget->headerContent;
+$headerTitle		= $settings->headerTitle && !empty( $model->displayName ) ? $model->displayName : $widget->headerTitle;
+$headerInfo			= $settings->headerInfo && !empty( $model->description ) ? $model->description : $widget->headerInfo;
+$headerContent		= $settings->headerContent && !empty( $model->summary ) ? $model->summary : $widget->headerContent;
 
-$description		= $settings->description ?? $widget->description;
-$summary			= $settings->summary ?? $widget->summary;
+$avatar			= $settings->defaultAvatar || $widget->defaultAvatar ? SiteProperties::getInstance()->getDefaultAvatar() : null;
+$headerIconUrl	= !empty( $settings->headerIconUrl ) ? $settings->headerIconUrl : CodeGenUtil::getFileUrl( $model->avatar, [ 'image' => $avatar ] );
+$headerIconUrl	= !empty( $headerIconUrl ) ? $headerIconUrl : $widget->headerIconUrl;
+
+// Content ------------------
+
 $content			= $settings->content ?? $widget->content;
-$contentData		= !empty( $model->content ) ? $model->content : $widget->contentData;
+$contentTitle		= $settings->contentTitle && !empty( $model->displayName ) ? $model->displayName : $widget->contentTitle;
+$contentInfo		= $settings->contentInfo && !empty( $model->description ) ? $model->description : $widget->contentInfo;
+$contentSummary		= $settings->contentSummary && !empty( $model->summary ) ? $model->summary : $widget->contentSummary;
+$contentData		= $settings->contentData && !empty( $model->content ) ? $model->content : $widget->contentData;
+
+$contentClass		= !empty( $settings->contentClass ) ? $settings->contentClass : $widget->contentClass;
+$contentDataClass	= !empty( $settings->contentDataClass ) ? $settings->contentDataClass : $widget->contentDataClass;
+
+// Footer -------------------
 
 $footer				= $settings->footer ?? $widget->footer;
 $footerIcon			= $settings->footerIcon ?? $widget->footerIcon;
 $footerIconClass	= $settings->footerIconClass ?? $widget->footerIconClass;
-$footerIconUrl		= $settings->footerIconUrl ?? $widget->footerIconUrl;
-$footerTitle		= $settings->footerTitle ?? $model->name ?? $widget->footerTitle;
-$footerInfo			= $settings->footerInfo ?? $widget->footerInfo;
-$footerContent		= $settings->footerContent ?? $widget->footerContent;
+$footerTitle		= $settings->footerTitle && !empty( $settings->footerTitleData ) ? $settings->footerTitleData : ( $settings->footerTitle && !empty( $model->displayName ) ? $model->displayName : $widget->footerTitle );
+$footerInfo			= $settings->footerInfo && !empty( $settings->footerInfoData ) ? $settings->footerInfoData : ( $settings->footerInfo && !empty( $model->description ) ? $model->description : $widget->footerInfo );
+$footerContent		= $settings->footerContent && !empty( $settings->footerContentData ) ? $settings->footerContentData : ( $settings->footerContent && !empty( $model->summary ) ? $model->summary : $widget->footerContent );
+
+$footerIconUrl	= $footerIcon && !empty( $settings->footerIconUrl ) ? $settings->footerIconUrl : CodeGenUtil::getFileUrl( $model->avatar, [ 'image' => $avatar ] );
+$footerIconUrl	= !empty( $footerIconUrl ) ? $footerIconUrl : $widget->footerIconUrl;
+
+// Max Cover ----------------
 
 $maxCover			= $settings->maxCover ?? $widget->maxCover;
 $maxCoverClass		= $settings->maxCoverClass ?? $widget->maxCoverClass;
 $maxCoverContent	= $settings->maxCoverContent ?? $widget->maxCoverContent;
+
+// Background ---------------
 
 $bkg		= $settings->bkg ?? $widget->bkg;
 $bkgClass	= $settings->bkgClass ?? $widget->bkgClass;
@@ -50,11 +59,7 @@ $bkgClass	= $settings->bkgClass ?? $widget->bkgClass;
 $texture		= $settings->texture ?? $widget->texture;
 $textureClass	= !empty( $model->texture ) ? $model->texture : "texture $widget->textureClass";
 
-$avatar			= $widget->defaultAvatar ? SiteProperties::getInstance()->getDefaultAvatar() : null;
-$headerIconUrl	= CodeGenUtil::getFileUrl( $model->avatar, [ 'image' => $avatar ] );
-$headerIconUrl	= !empty( $headerIconUrl ) ? $headerIconUrl : ( !empty( $settings->headerIconUrl ) ? $settings->headerIconUrl : $widget->headerIconUrl );
-
-$banner		= $widget->defaultBanner ? SiteProperties::getInstance()->getDefaultBanner() : null;
+$banner		= $settings->defaultBanner || $widget->defaultBanner ? SiteProperties::getInstance()->getDefaultBanner() : null;
 $bannerUrl	= CodeGenUtil::getFileUrl( $model->banner, [ 'image' => $banner ] );
 $bkgUrl		= $bannerUrl ?? $widget->bkgUrl;
 ?>
@@ -90,21 +95,30 @@ $bkgUrl		= $bannerUrl ?? $widget->bkgUrl;
 				<?php if( !empty( $headerTitle ) ) { ?>
 					<div class="box-header-title"><?= $headerTitle ?></div>
 				<?php } ?>
-				<?php if( $description && !empty( $headerInfo ) ) { ?>
-					<div class="box-header-info"><?= $headerInfo ?></div>
+				<?php if( !empty( $headerInfo ) ) { ?>
+					<div class="box-header-info reader"><?= $headerInfo ?></div>
 				<?php } ?>
-				<?php if( $summary && !empty( $headerContent ) ) { ?>
-					<div class="box-header-content"><?= $headerContent ?></div>
+				<?php if( !empty( $headerContent ) ) { ?>
+					<div class="box-header-content reader"><?= $headerContent ?></div>
 				<?php } ?>
 			</div>
 		</div>
 	<?php } ?>
 
 	<?php if( $content ) { ?>
-		<div class="box-content">
-			<div class="box-content-data">
-				<?= $contentData ?>
-			</div>
+		<div class="box-content <?= $contentClass ?>">
+			<?php if( !empty( $contentTitle ) ) { ?>
+				<div class="box-content-title"><?= $contentTitle ?></div>
+			<?php } ?>
+			<?php if( !empty( $contentInfo ) ) { ?>
+				<div class="box-content-info reader"><?= $contentInfo ?></div>
+			<?php } ?>
+			<?php if( !empty( $contentSummary ) ) { ?>
+				<div class="box-content-summary reader"><?= $contentSummary ?></div>
+			<?php } ?>
+			<?php if( !empty( $contentData ) ) { ?>
+				<div class="box-content-data reader <?= $contentDataClass ?>"><?= $contentData ?></div>
+			<?php } ?>
 			<div class="box-content-buffer">
 				<?php if( isset( $widget->buffer ) ) { ?>
 					<?= $widget->bufferData ?>
@@ -130,10 +144,10 @@ $bkgUrl		= $bannerUrl ?? $widget->bkgUrl;
 					<div class="box-footer-title"><?= $footerTitle ?></div>
 				<?php } ?>
 				<?php if( !empty( $footerInfo ) ) { ?>
-					<div class="box-footer-info"><?= $footerInfo ?></div>
+					<div class="box-footer-info reader"><?= $footerInfo ?></div>
 				<?php } ?>
 				<?php if( !empty( $footerContent ) ) { ?>
-					<div class="box-footer-content"><?= $footerContent ?></div>
+					<div class="box-footer-content reader"><?= $footerContent ?></div>
 				<?php } ?>
 			</div>
 		</div>
