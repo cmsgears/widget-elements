@@ -1,4 +1,7 @@
 <?php
+// Yii Imports
+use yii\helpers\Html;
+
 // CMG Imports
 use cmsgears\core\frontend\config\SiteProperties;
 
@@ -36,6 +39,8 @@ $contentData		= $settings->contentData && !empty( $model->content ) ? $model->co
 $contentClass		= !empty( $settings->contentClass ) ? $settings->contentClass : $widget->contentClass;
 $contentDataClass	= !empty( $settings->contentDataClass ) ? $settings->contentDataClass : $widget->contentDataClass;
 $boxWrapClass		= !empty( $settings->boxWrapClass ) ? $settings->boxWrapClass : $widget->boxWrapClass;
+$boxWrapper			= !empty( $settings->boxWrapper ) ? $settings->boxWrapper : $widget->boxWrapper;
+$boxClass			= !empty( $settings->boxClass ) ? $settings->boxClass : $widget->boxClass;
 
 // Footer -------------------
 
@@ -69,7 +74,7 @@ $parallaxBkg	= $settings->parallaxBkg ?? $widget->parallaxBkg;
 $bkgClass		= $settings->bkgClass ?? $widget->bkgClass;
 
 $texture		= $settings->texture ?? $widget->texture;
-$textureClass	= !empty( $model->texture ) ? $model->texture : "texture $widget->textureClass";
+$textureClass	= !empty( $model->texture ) && $model->texture !== 'texture' ? $model->texture : "$widget->textureClass";
 
 $banner		= $settings->defaultBanner || $widget->defaultBanner ? SiteProperties::getInstance()->getDefaultBanner() : null;
 $bannerUrl	= CodeGenUtil::getFileUrl( $model->banner, [ 'image' => $banner ] );
@@ -163,7 +168,16 @@ $bkgUrl		= $bannerUrl ?? $widget->bkgUrl;
 
 						foreach( $elements as $element ) {
 
-							echo ElementWidget::widget( [ 'model' => $element ] );
+							$elementContent = ElementWidget::widget( [ 'model' => $element ] );
+
+							if( !empty( $boxClass ) ) {
+
+								echo Html::tag( $boxWrapper, $elementContent, [ 'class' => $boxClass ] );
+							}
+							else {
+
+								echo $elementContent;
+							}
 						}
 					?>
 				</div>
