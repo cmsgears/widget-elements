@@ -89,6 +89,10 @@ class BlockWidget extends ObjectWidget {
 	public $footerInfo		= null;
 	public $footerContent	= null;
 
+	// Meta
+	public $attributes = false;
+	public $attributeTypes = null;
+
 	// Block Elements
 	public $elements		= false;
 	public $elementType		= null;

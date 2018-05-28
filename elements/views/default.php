@@ -45,6 +45,11 @@ $footerContent		= $settings->footerContent && !empty( $settings->footerContentDa
 $footerIconUrl	= $footerIcon && !empty( $settings->footerIconUrl ) ? $settings->footerIconUrl : CodeGenUtil::getFileUrl( $model->avatar, [ 'image' => $avatar ] );
 $footerIconUrl	= !empty( $footerIconUrl ) ? $footerIconUrl : $widget->footerIconUrl;
 
+// Meta ---------------------
+
+$attributes			= $settings->attributeData ?? $widget->attributes;
+$attributeTypes		= $settings->attributeTypes ?? $widget->attributeTypes;
+
 // Max Cover ----------------
 
 $maxCover			= $settings->maxCover ?? $widget->maxCover;
@@ -124,6 +129,37 @@ $bkgUrl		= $bannerUrl ?? $widget->bkgUrl;
 					<?= $widget->bufferData ?>
 				<?php } ?>
 			</div>
+			<?php if( $attributes ) { ?>
+				<div class="box-content-meta">
+					<?php
+
+						$attributeTypes = preg_split( '/,/', $attributeTypes );
+
+						if( count( $attributeTypes ) == 1 ) {
+
+							$attributes = $model->getActiveMetasByType( $attributeTypes[ 0 ] );
+						}
+						else if( count( $attributeTypes ) > 1 ) {
+
+							$attributes = $model->getActiveMetasByTypes( $attributeTypes );
+						}
+						else {
+
+							$attributes = $model->activeMetas;
+						}
+
+						foreach( $attributes as $attribute ) {
+
+							$title = isset( $attribute->label ) ? $attribute->label : ucfirst( $attribute->name );
+					?>
+							<div class="box-meta">
+								<span class="h5 inline-block"><?= $title ?></span> - <span class="inline-block"><?= $attribute->value ?></span>
+							</div>
+					<?php
+						}
+					?>
+				</div>
+			<?php } ?>
 		</div>
 	<?php } ?>
 

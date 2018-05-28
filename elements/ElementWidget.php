@@ -82,6 +82,10 @@ class ElementWidget extends ObjectWidget {
 	public $footerInfo		= null;
 	public $footerContent	= null;
 
+	// Meta
+	public $attributes = false;
+	public $attributeTypes = null;
+
 	// Protected --------------
 
 	// Private ----------------
