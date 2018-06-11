@@ -14,47 +14,45 @@ $settings = $data->settings ?? null;
 $header				= $settings->header ?? $widget->header;
 $headerIcon			= $settings->headerIcon ?? $widget->headerIcon;
 $headerIconClass	= !empty( $model->icon ) ? $model->icon : $widget->headerIconClass;
-$headerTitle		= $settings->headerTitle && !empty( $model->displayName ) ? $model->displayName : $widget->headerTitle;
-$headerInfo			= $settings->headerInfo && !empty( $model->description ) ? $model->description : $widget->headerInfo;
-$headerContent		= $settings->headerContent && !empty( $model->summary ) ? $model->summary : $widget->headerContent;
+$headerTitle		= isset( $settings ) && $settings->headerTitle && !empty( $model->displayName ) ? $model->displayName : $widget->headerTitle;
+$headerInfo			= isset( $settings ) && $settings->headerInfo && !empty( $model->description ) ? $model->description : $widget->headerInfo;
+$headerContent		= isset( $settings ) && $settings->headerContent && !empty( $model->summary ) ? $model->summary : $widget->headerContent;
 
-$avatar			= $settings->defaultAvatar || $widget->defaultAvatar ? SiteProperties::getInstance()->getDefaultAvatar() : null;
+$avatar			= ( isset( $settings ) && $settings->defaultAvatar ) || $widget->defaultAvatar ? SiteProperties::getInstance()->getDefaultAvatar() : null;
 $headerIconUrl	= !empty( $settings->headerIconUrl ) ? $settings->headerIconUrl : CodeGenUtil::getFileUrl( $model->avatar, [ 'image' => $avatar ] );
 $headerIconUrl	= !empty( $headerIconUrl ) ? $headerIconUrl : $widget->headerIconUrl;
 
 // Content ------------------
 
 $content			= $settings->content ?? $widget->content;
-$contentTitle		= $settings->contentTitle && !empty( $model->displayName ) ? $model->displayName : $widget->contentTitle;
-$contentInfo		= $settings->contentInfo && !empty( $model->description ) ? $model->description : $widget->contentInfo;
-$contentSummary		= $settings->contentSummary && !empty( $model->summary ) ? $model->summary : $widget->contentSummary;
-$contentData		= $settings->contentData && !empty( $model->content ) ? $model->content : $widget->contentData;
+$contentTitle		= isset( $settings ) && $settings->contentTitle && !empty( $model->displayName ) ? $model->displayName : $widget->contentTitle;
+$contentInfo		= isset( $settings ) && $settings->contentInfo && !empty( $model->description ) ? $model->description : $widget->contentInfo;
+$contentSummary		= isset( $settings ) && $settings->contentSummary && !empty( $model->summary ) ? $model->summary : $widget->contentSummary;
+$contentData		= isset( $settings ) && $settings->contentData && !empty( $model->content ) ? $model->content : $widget->contentData;
 
-$contentClass		= !empty( $settings->contentClass ) ? $settings->contentClass : $widget->contentClass;
-$contentDataClass	= !empty( $settings->contentDataClass ) ? $settings->contentDataClass : $widget->contentDataClass;
+$maxCover = $settings->maxCover ?? $widget->maxCover;
+
+$contentClass		= isset( $settings ) && !empty( $settings->contentClass ) ? $settings->contentClass : $widget->contentClass;
+$contentDataClass	= isset( $settings ) && !empty( $settings->contentDataClass ) ? $settings->contentDataClass : $widget->contentDataClass;
 
 // Footer -------------------
 
 $footer				= $settings->footer ?? $widget->footer;
 $footerIcon			= $settings->footerIcon ?? $widget->footerIcon;
 $footerIconClass	= $settings->footerIconClass ?? $widget->footerIconClass;
-$footerTitle		= $settings->footerTitle && !empty( $settings->footerTitleData ) ? $settings->footerTitleData : ( $settings->footerTitle && !empty( $model->displayName ) ? $model->displayName : $widget->footerTitle );
-$footerInfo			= $settings->footerInfo && !empty( $settings->footerInfoData ) ? $settings->footerInfoData : ( $settings->footerInfo && !empty( $model->description ) ? $model->description : $widget->footerInfo );
-$footerContent		= $settings->footerContent && !empty( $settings->footerContentData ) ? $settings->footerContentData : ( $settings->footerContent && !empty( $model->summary ) ? $model->summary : $widget->footerContent );
+$footerTitle		= isset( $settings ) && ( $settings->footerTitle && !empty( $settings->footerTitleData ) ) ? $settings->footerTitleData : ( isset( $settings ) && $settings->footerTitle && !empty( $model->displayName ) ? $model->displayName : $widget->footerTitle );
+$footerInfo			= isset( $settings ) && ( $settings->footerInfo && !empty( $settings->footerInfoData ) ) ? $settings->footerInfoData : ( isset( $settings ) && $settings->footerInfo && !empty( $model->description ) ? $model->description : $widget->footerInfo );
+$footerContent		= isset( $settings ) && ( $settings->footerContent && !empty( $settings->footerContentData ) ) ? $settings->footerContentData : ( isset( $settings ) && $settings->footerContent && !empty( $model->summary ) ? $model->summary : $widget->footerContent );
 
-$footerIconUrl	= $footerIcon && !empty( $settings->footerIconUrl ) ? $settings->footerIconUrl : CodeGenUtil::getFileUrl( $model->avatar, [ 'image' => $avatar ] );
+$footerIconUrl	= isset( $settings ) && !empty( $settings->footerIconUrl ) ? $settings->footerIconUrl : CodeGenUtil::getFileUrl( $model->avatar, [ 'image' => $avatar ] );
 $footerIconUrl	= !empty( $footerIconUrl ) ? $footerIconUrl : $widget->footerIconUrl;
 
 // Meta ---------------------
 
-$attributes			= $settings->attributeData ?? $widget->attributes;
+$attributes			= $settings->attributes ?? $widget->attributes;
 $attributeTypes		= $settings->attributeTypes ?? $widget->attributeTypes;
 
-// Max Cover ----------------
-
-$maxCover			= $settings->maxCover ?? $widget->maxCover;
-$maxCoverClass		= $settings->maxCoverClass ?? $widget->maxCoverClass;
-$maxCoverContent	= $settings->maxCoverContent ?? $widget->maxCoverContent;
+$attributeWrapClass	= isset( $settings ) && !empty( $settings->metaWrapClass ) ? $settings->metaWrapClass : $widget->attributeWrapClass;
 
 // Background ---------------
 
@@ -62,9 +60,9 @@ $bkg		= $settings->bkg ?? $widget->bkg;
 $bkgClass	= $settings->bkgClass ?? $widget->bkgClass;
 
 $texture		= $settings->texture ?? $widget->texture;
-$textureClass	= !empty( $model->texture ) ? $model->texture : "texture $widget->textureClass";
+$textureClass	= !empty( $model->texture ) ? $model->texture : $widget->textureClass;
 
-$banner		= $settings->defaultBanner || $widget->defaultBanner ? SiteProperties::getInstance()->getDefaultBanner() : null;
+$banner		= ( isset( $settings ) && $settings->defaultBanner ) || $widget->defaultBanner ? SiteProperties::getInstance()->getDefaultBanner() : null;
 $bannerUrl	= CodeGenUtil::getFileUrl( $model->banner, [ 'image' => $banner ] );
 $bkgUrl		= $bannerUrl ?? $widget->bkgUrl;
 ?>
@@ -78,9 +76,7 @@ $bkgUrl		= $bannerUrl ?? $widget->bkgUrl;
 <?php } ?>
 
 <?php if( $maxCover ) { ?>
-	<div class="max-cover <?= $maxCoverClass ?>">
-		<?= $maxCoverContent ?>
-	</div>
+	<div class="max-cover"></div>
 <?php } ?>
 
 <div class="box-content-wrap">
@@ -130,7 +126,7 @@ $bkgUrl		= $bannerUrl ?? $widget->bkgUrl;
 				<?php } ?>
 			</div>
 			<?php if( $attributes ) { ?>
-				<div class="box-content-meta">
+				<div class="box-content-meta <?= $attributeWrapClass ?>">
 					<?php
 
 						$attributeTypes = preg_split( '/,/', $attributeTypes );

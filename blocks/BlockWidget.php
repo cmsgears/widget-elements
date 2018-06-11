@@ -52,11 +52,6 @@ class BlockWidget extends ObjectWidget {
 	public $texture			= false;
 	public $textureClass	= null;
 
-	// Max cover on top of content
-	public $maxCover		= false;
-	public $maxCoverContent	= null;
-	public $maxCoverClass	= null;
-
 	// Block Header
 	public $header			= false;
 	public $headerIcon		= false;
@@ -73,12 +68,10 @@ class BlockWidget extends ObjectWidget {
 	public $contentSummary	= null;
 	public $contentData		= null;
 
+	public $maxCover = false;
+
 	public $contentClass		= null;
 	public $contentDataClass	= null;
-
-	public $boxWrapClass	= null;
-	public $boxWrapper		= null;
-	public $boxClass		= null;
 
 	// Footer
 	public $footer			= false;
@@ -90,12 +83,18 @@ class BlockWidget extends ObjectWidget {
 	public $footerContent	= null;
 
 	// Meta
-	public $attributes = false;
-	public $attributeTypes = null;
+	public $attributes		= false;
+	public $attributeTypes	= null;
+
+	public $attributeWrapClass	= null;
 
 	// Block Elements
 	public $elements		= false;
 	public $elementType		= null;
+
+	public $boxWrapClass	= null;
+	public $boxWrapper		= null;
+	public $boxClass		= null;
 
 	// Protected --------------
 
