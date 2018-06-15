@@ -151,7 +151,7 @@ $bkgUrl		= $bannerUrl ?? $widget->bkgUrl;
 				<div class="block-content-summary reader"><?= $contentSummary ?></div>
 			<?php } ?>
 			<?php if( !empty( $contentData ) ) { ?>
-				<div class="block-content-data reader <?= $contentDataClass ?>"><?= $contentData ?></div>
+				<div class="block-content-data <?= $contentDataClass ?>"><?= $contentData ?></div>
 			<?php } ?>
 			<div class="block-content-buffer">
 				<?php if( isset( $widget->buffer ) ) { ?>

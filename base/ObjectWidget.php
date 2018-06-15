@@ -110,16 +110,17 @@ abstract class ObjectWidget extends Widget {
 		if( isset( $this->model ) && $this->model->isActive() && $this->model->isVisible() ) {
 
 			// Model Template
-			$template = $this->model->template;
+			$model		= $this->model;
+			$template	= $model->template;
 
 			// Model Data
-			$this->modelData = json_decode( $this->model->data );
+			$this->modelData = json_decode( $model->data );
 
 			// Use template defined by Admin
 			if( isset( $template ) && $template->fileRender ) {
 
 				$this->templateDir	= $template->viewPath;
-				$this->template		= $template->view;
+				$this->template		= !empty( $template->view ) ? $template->view : 'view';
 			}
 
 			// Pass model and data to widget view
@@ -128,9 +129,33 @@ abstract class ObjectWidget extends Widget {
 			// Wrap the view
 			if( $this->wrap ) {
 
-				$htmlOptions = json_decode( $this->model->htmlOptions, true );
+				// Apply template options - Overrides widget options
+				$htmlOptions = isset( $template ) && !empty( $template->htmlOptions ) ? json_decode( $template->htmlOptions, true ) : [];
 
-				$options = !empty( $this->model->htmlOptions ) ? ArrayHelper::merge( $this->options, $htmlOptions ) : $this->options;
+				$options = !empty( $htmlOptions ) ? ArrayHelper::merge( $this->options, $htmlOptions ) : $this->options;
+
+				// Apply model options - Overrides widget and template options
+				$htmlOptions = json_decode( $model->htmlOptions, true );
+
+				$options = !empty( $htmlOptions ) ? ArrayHelper::merge( $options, $htmlOptions ) : $options;
+
+				$type = $this->modelService->getParentType();
+
+				$classOption = isset( $options[ 'class' ] ) ? $options[ 'class' ] : null;
+
+				if( isset( $template ) && !strpos( $classOption, "{$type}-{$template->slug}" ) ) {
+
+					$classOption = "$classOption obj-{$type} {$type}-{$template->slug} {$type}-{$model->slug}";
+				}
+				else {
+
+					$classOption = "$classOption obj-{$type} {$type}-{$model->slug}";
+				}
+
+				// Notes: Avoid assigning id to handle multiple objects on same page
+				//$options[ 'id' ]	= "{$type}-{$model->slug}"; // Force Unique Id
+
+				$options[ 'class' ] = $classOption;
 
 				return Html::tag( $this->wrapper, $widgetHtml, $options );
 			}
