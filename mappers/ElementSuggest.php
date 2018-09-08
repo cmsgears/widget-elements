@@ -13,11 +13,11 @@ namespace cmsgears\widgets\elements\mappers;
 use cmsgears\cms\common\config\CmsGlobal;
 
 /**
- * WidgetAuto maps widgets to models using auto-suggest.
+ * ElementSuggest maps elements to models using auto-suggest.
  *
  * @since 1.0.0
  */
-class WidgetAuto extends ObjectAuto {
+class ElementSuggest extends ObjectSuggest {
 
 	// Variables ---------------------------------------------------
 
@@ -33,14 +33,14 @@ class WidgetAuto extends ObjectAuto {
 
 	// Public -----------------
 
-	public $type	= CmsGlobal::TYPE_WIDGET;
-	public $ctype	= CmsGlobal::TYPE_WIDGET;
+	public $type	= CmsGlobal::TYPE_ELEMENT;
+	public $ctype	= CmsGlobal::TYPE_ELEMENT;
 
-	public $mapperTemplate	= 'widgetMapperTemplate';
+	public $mapperTemplate = 'elementMapperTemplate';
 
-	public $notes = '<b>Notes</b>: Type in search box to filter widgets and select the widget to map.';
+	public $notes = '<b>Notes</b>: Type in search box to filter elements and select the element to map.';
 
-	public $actionUrl = 'cms/block/auto-search';
+	public $actionUrl = 'cms/element/auto-search';
 
 	// Protected --------------
 
@@ -54,7 +54,7 @@ class WidgetAuto extends ObjectAuto {
 
 		parent::init();
 
-		$this->modelObjects = isset( $this->model ) ? $this->model->activeModelWidgets : [];
+		$this->modelObjects = isset( $this->model ) ? $this->model->activeModelElements : [];
 	}
 
 	// Instance methods --------------------------------------------
@@ -69,6 +69,6 @@ class WidgetAuto extends ObjectAuto {
 
 	// CMG parent classes --------------------
 
-	// WidgetAuto ----------------------------
+	// ElementSuggest ------------------------
 
 }

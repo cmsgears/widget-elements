@@ -9,12 +9,15 @@
 
 namespace cmsgears\widgets\elements\mappers;
 
+// CMG Imports
+use cmsgears\cms\common\config\CmsGlobal;
+
 /**
- * LinkAuto maps links to models using auto-suggest.
+ * BlockSuggest maps blocks to models using auto-suggest.
  *
  * @since 1.0.0
  */
-class LinkAuto extends ObjectAuto {
+class BlockSuggest extends ObjectSuggest {
 
 	// Variables ---------------------------------------------------
 
@@ -30,13 +33,14 @@ class LinkAuto extends ObjectAuto {
 
 	// Public -----------------
 
-	public $type = null;
+	public $type	= CmsGlobal::TYPE_BLOCK;
+	public $ctype	= CmsGlobal::TYPE_BLOCK;
 
-	public $mapperTemplate = 'linkMapperTemplate';
+	public $mapperTemplate = 'blockMapperTemplate';
 
-	public $notes = '<b>Notes</b>: Type in search box to filter links and select the link to map.';
+	public $notes = '<b>Notes</b>: Type in search box to filter blocks and select the block to map.';
 
-	public $actionUrl = 'cms/link/auto-search';
+	public $actionUrl = 'cms/block/auto-search';
 
 	// Protected --------------
 
@@ -50,7 +54,7 @@ class LinkAuto extends ObjectAuto {
 
 		parent::init();
 
-		$this->modelObjects = isset( $this->model ) ? $this->model->activeModelLinks : [];
+		$this->modelObjects = isset( $this->model ) ? $this->model->activeModelBlocks : [];
 	}
 
 	// Instance methods --------------------------------------------
@@ -65,6 +69,6 @@ class LinkAuto extends ObjectAuto {
 
 	// CMG parent classes --------------------
 
-	// LinkAuto ------------------------------
+	// BlockSuggest --------------------------
 
 }

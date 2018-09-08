@@ -10,11 +10,11 @@
 namespace cmsgears\widgets\elements\mappers;
 
 /**
- * ObjectAuto maps objects to models using auto-suggest.
+ * ObjectSuggest maps objects to models using auto-suggest.
  *
  * @since 1.0.0
  */
-abstract class ObjectAuto extends ObjectMapper {
+abstract class ObjectSuggest extends ObjectMapper {
 
 	// Variables ---------------------------------------------------
 
@@ -33,19 +33,23 @@ abstract class ObjectAuto extends ObjectMapper {
 	// Mapping type to classify the mapping
 	public $ctype;
 
+	public $label;
+
 	// Search not required for auto-suggest
 	public $searchByType = false;
 
+	// Level not required for auto-suggest
 	public $levelList = false;
+
+	// Input not required for auto-suggest
+	public $inputType = 'none';
 
 	public $notes = '<b>Notes</b>: Type in search box to filter objects and select the object to map.';
 
 	public $showNotes = true;
 
-	public $inputType = 'none';
-
 	// Override default view path
-	public $template = 'auto';
+	public $template = 'suggest';
 
 	public $mapperTemplate = 'objectMapperTemplate';
 
@@ -95,6 +99,6 @@ abstract class ObjectAuto extends ObjectMapper {
 
 	// CMG parent classes --------------------
 
-	// ObjectAuto ----------------------------
+	// ObjectSuggest -------------------------
 
 }

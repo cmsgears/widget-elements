@@ -1,16 +1,22 @@
 <?php
-$type			= $widget->type;
-$ctype			= $widget->ctype;
-$model			= $widget->model;
-$disabled		= $widget->disabled;
-$notes			= $widget->notes;
-$showNotes		= $widget->showNotes;
+$title = $widget->title;
+
+$type	= $widget->type;
+$ctype	= $widget->ctype;
+$label	= $widget->label;
+$model	= $widget->model;
+
+$disabled	= $widget->disabled;
+
+$notes		= $widget->notes;
+$showNotes	= $widget->showNotes;
+
 $mapperTemplate	= $widget->mapperTemplate;
 
-$app			= $widget->app;
-$controller		= $widget->controller;
-$action			= $widget->action;
-$actionUrl		= $widget->actionUrl;
+$app		= $widget->app;
+$controller	= $widget->controller;
+$action		= $widget->action;
+$actionUrl	= $widget->actionUrl;
 
 $mapAction		= $widget->mapAction;
 $mapActionUrl	= $widget->mapActionUrl;
@@ -18,14 +24,17 @@ $mapActionUrl	= $widget->mapActionUrl;
 $deleteAction		= $widget->deleteAction;
 $deleteActionUrl	= $widget->deleteActionUrl;
 
-$modelObjects	= $widget->modelObjects;
+$modelObjects = $widget->modelObjects;
 ?>
 <div class="mapper mapper-auto mapper-auto-items" template="<?= $mapperTemplate ?>">
 	<div class="auto-fill auto-fill-basic">
 		<?php if( !$disabled ) { ?>
 		<div class="auto-fill-source" cmt-app="<?= $app ?>" cmt-controller="<?= $controller ?>" cmt-action="<?= $action ?>" action="<?= $actionUrl ?>" cmt-keep cmt-custom>
 			<div class="relative">
-				<div class="auto-fill-search clearfix">
+				<div class="auto-fill-search form-group clearfix">
+					<?php if( isset( $label ) ) { ?>
+						<label><?= $label ?></label>
+					<?php } ?>
 					<div class="frm-icon-element icon-right">
 						<span class="icon cmti cmti-search"></span>
 						<input class="cmt-key-up auto-fill-text search-name" type="text" name="name" placeholder="Search" autocomplete="off" />
@@ -80,9 +89,8 @@ $modelObjects	= $widget->modelObjects;
 	</div>
 </div>
 
-<div class="clear filler-height"></div>
-
-<?php if( !$disabled && $showNotes ) { ?>
+<?php if( !$disabled && $showNotes && !empty( $showNotes ) ) { ?>
+	<div class="clear filler-height"></div>
 	<div class="note"><?= $notes ?></div>
 <?php } ?>
 
