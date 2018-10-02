@@ -145,17 +145,17 @@ abstract class ObjectWidget extends Widget {
 
 				if( isset( $template ) && !strpos( $classOption, "{$type}-{$template->slug}" ) ) {
 
-					$classOption = "$classOption obj-{$type} {$type}-{$template->slug} {$type}-{$model->slug}";
+					$classOption = "{$type} $classOption obj-{$type} {$type}-{$template->slug} {$type}-{$model->slug}";
 				}
 				else {
 
-					$classOption = "$classOption obj-{$type} {$type}-{$model->slug}";
+					$classOption = "{$type} $classOption obj-{$type} {$type}-{$model->slug}";
 				}
 
 				// Notes: Avoid assigning id to handle multiple objects on same page
 				//$options[ 'id' ]	= "{$type}-{$model->slug}"; // Force Unique Id
 
-				$options[ 'class' ] = $classOption;
+				$options[ 'class' ] = join( ' ', array_unique( preg_split( '/ /', $classOption ) ) );
 
 				return Html::tag( $this->wrapper, $widgetHtml, $options );
 			}
