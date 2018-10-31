@@ -67,10 +67,10 @@ class SidebarWidget extends ObjectWidget {
 	public $contentDataClass	= null;
 
 	// Meta
-	public $attributes		= false;
-	public $attributeTypes	= null;
+	public $metas		= false;
+	public $metaTypes	= null;
 
-	public $attributeWrapClass	= null;
+	public $metaWrapClass = null;
 
 	// Widgets
 	public $widgets		= false;

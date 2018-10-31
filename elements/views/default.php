@@ -49,10 +49,10 @@ $footerIconUrl	= !empty( $footerIconUrl ) ? $footerIconUrl : $widget->footerIcon
 
 // Meta ---------------------
 
-$attributes			= $settings->attributes ?? $widget->attributes;
-$attributeTypes		= $settings->attributeTypes ?? $widget->attributeTypes;
+$metas			= $settings->metas ?? $widget->metas;
+$metaTypes		= $settings->metaTypes ?? $widget->metaTypes;
 
-$attributeWrapClass	= isset( $settings ) && !empty( $settings->metaWrapClass ) ? $settings->metaWrapClass : $widget->attributeWrapClass;
+$metaWrapClass	= isset( $settings ) && !empty( $settings->metaWrapClass ) ? $settings->metaWrapClass : $widget->metaWrapClass;
 
 // Background ---------------
 
@@ -125,31 +125,31 @@ $bkgUrl		= $bannerUrl ?? $widget->bkgUrl;
 					<?= $widget->bufferData ?>
 				<?php } ?>
 			</div>
-			<?php if( $attributes ) { ?>
-				<div class="box-content-meta <?= $attributeWrapClass ?>">
+			<?php if( $metas ) { ?>
+				<div class="box-content-meta <?= $metaWrapClass ?>">
 					<?php
 
-						$attributeTypes = preg_split( '/,/', $attributeTypes );
+						$metaTypes = preg_split( '/,/', $metaTypes );
 
-						if( count( $attributeTypes ) == 1 ) {
+						if( count( $metaTypes ) == 1 ) {
 
-							$attributes = $model->getActiveMetasByType( $attributeTypes[ 0 ] );
+							$metas = $model->getActiveMetasByType( $metaTypes[ 0 ] );
 						}
-						else if( count( $attributeTypes ) > 1 ) {
+						else if( count( $metaTypes ) > 1 ) {
 
-							$attributes = $model->getActiveMetasByTypes( $attributeTypes );
+							$metas = $model->getActiveMetasByTypes( $metaTypes );
 						}
 						else {
 
-							$attributes = $model->activeMetas;
+							$metas = $model->activeMetas;
 						}
 
-						foreach( $attributes as $attribute ) {
+						foreach( $metas as $meta ) {
 
-							$title = isset( $attribute->label ) ? $attribute->label : ucfirst( $attribute->name );
+							$title = isset( $meta->label ) ? $meta->label : ucfirst( $meta->name );
 					?>
 							<div class="box-meta">
-								<span class="h5 inline-block"><?= $title ?></span> - <span class="inline-block"><?= $attribute->value ?></span>
+								<span class="h5 inline-block"><?= $title ?></span> - <span class="inline-block"><?= $meta->value ?></span>
 							</div>
 					<?php
 						}
