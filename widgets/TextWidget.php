@@ -68,7 +68,7 @@ class TextWidget extends ObjectWidget {
 
 	// Meta
 	public $metas		= false;
-	public $metaTypes	= null;
+	public $metaType	= null;
 
 	public $metaWrapClass = null;
 
