@@ -8,32 +8,32 @@ $model	= $widget->model;
 $data	= $widget->modelData;
 
 // Admin Settings - Override widget settings to be controllable from admin.
-$settings = $data->settings ?? null;
+$settings = isset( $data->settings ) ? $data->settings : [];
 
 // Header -------------------
 
-$header				= $settings->header ?? $widget->header;
-$headerTitle		= isset( $settings ) && $settings->headerTitle && !empty( $model->displayName ) ? $model->displayName : $widget->headerTitle;
+$header			= isset( $settings->header ) ? $settings->header : $widget->header;
+$headerTitle	= isset( $settings->headerTitle ) && !empty( $model->displayName ) ? $model->displayName : $widget->headerTitle;
 
-$avatar			= ( isset( $settings ) && $settings->defaultAvatar ) || $widget->defaultAvatar ? SiteProperties::getInstance()->getDefaultAvatar() : null;
+$avatar			= ( isset( $settings->defaultAvatar ) && $settings->defaultAvatar ) || $widget->defaultAvatar ? SiteProperties::getInstance()->getDefaultAvatar() : null;
 $headerIconUrl	= !empty( $settings->headerIconUrl ) ? $settings->headerIconUrl : CodeGenUtil::getFileUrl( $model->avatar, [ 'image' => $avatar ] );
 $headerIconUrl	= !empty( $headerIconUrl ) ? $headerIconUrl : $widget->headerIconUrl;
 
 // Content ------------------
 
-$content			= $settings->content ?? $widget->content;
-$contentTitle		= isset( $settings ) && $settings->contentTitle && !empty( $model->displayName ) ? $model->displayName : $widget->contentTitle;
-$contentInfo		= isset( $settings ) && $settings->contentInfo && !empty( $model->description ) ? $model->description : $widget->contentInfo;
-$contentSummary		= isset( $settings ) && $settings->contentSummary && !empty( $model->summary ) ? $model->summary : $widget->contentSummary;
-$contentData		= isset( $settings ) && $settings->contentData && !empty( $model->content ) ? $model->content : $widget->contentData;
+$content			= isset( $settings->content ) ? $settings->content : $widget->content;
+$contentTitle		= isset( $settings->contentTitle ) && $settings->contentTitle && !empty( $model->displayName ) ? $model->displayName : $widget->contentTitle;
+$contentInfo		= isset( $settings->contentInfo ) && $settings->contentInfo && !empty( $model->description ) ? $model->description : $widget->contentInfo;
+$contentSummary		= isset( $settings->contentSummary ) && $settings->contentSummary && !empty( $model->summary ) ? $model->summary : $widget->contentSummary;
+$contentData		= isset( $settings->contentData ) && $settings->contentData && !empty( $model->content ) ? $model->content : $widget->contentData;
 
-$contentClass		= isset( $settings ) && !empty( $settings->contentClass ) ? $settings->contentClass : $widget->contentClass;
-$contentDataClass	= isset( $settings ) && !empty( $settings->contentDataClass ) ? $settings->contentDataClass : $widget->contentDataClass;
+$contentClass		= !empty( $settings->contentClass ) ? $settings->contentClass : $widget->contentClass;
+$contentDataClass	= !empty( $settings->contentDataClass ) ? $settings->contentDataClass : $widget->contentDataClass;
 
 // Meta ---------------------
 
-$metas			= $settings->metas ?? $widget->metas;
-$metaTypes		= $settings->metaTypes ?? $widget->metaTypes;
+$metas		= isset( $settings->metas ) ? $settings->metas : $widget->metas;
+$metaType	= isset( $settings->metaType ) ? $settings->metaType : $widget->metaType;
 
 $metaWrapClass	= isset( $settings ) && !empty( $settings->metaWrapClass ) ? $settings->metaWrapClass : $widget->metaWrapClass;
 
@@ -102,15 +102,15 @@ $bkgUrl		= $bannerUrl ?? $widget->bkgUrl;
 				<div class="widget-content-meta <?= $metaWrapClass ?>">
 					<?php
 
-						$metaTypes = preg_split( '/,/', $metaTypes );
+						$metaType = preg_split( '/,/', $metaType );
 
-						if( count( $metaTypes ) == 1 ) {
+						if( count( $metaType ) == 1 ) {
 
-							$metas = $model->getActiveMetasByType( $metaTypes[ 0 ] );
+							$metas = $model->getActiveMetasByType( $metaType[ 0 ] );
 						}
-						else if( count( $metaTypes ) > 1 ) {
+						else if( count( $metaType ) > 1 ) {
 
-							$metas = $model->getActiveMetasByTypes( $metaTypes );
+							$metas = $model->getActiveMetasByTypes( $metaType );
 						}
 						else {
 
