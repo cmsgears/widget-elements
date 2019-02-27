@@ -14,6 +14,8 @@
 		}
 	},
     "require": {
-        "cmsgears/module-cms": "*"
+		"cmsgears/module-cms": "*",
+		"cmsgears/widget-nav": "*",
+		"cmsgears/widget-block": "*"
     }
 }
