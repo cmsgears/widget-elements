@@ -15,14 +15,12 @@ use Yii;
 // CMG Imports
 use cmsgears\cms\common\config\CmsGlobal;
 
-use cmsgears\widgets\elements\base\ObjectWidget;
-
 /**
  * SidebarWidget dynamically show the sidebar model.
  *
  * @since 1.0.0
  */
-class SidebarWidget extends ObjectWidget {
+class SidebarWidget extends \cmsgears\widgets\elements\base\ObjectWidget {
 
 	// Variables ---------------------------------------------------
 
@@ -44,6 +42,7 @@ class SidebarWidget extends ObjectWidget {
 	public $bkg			= false;
 	public $bkgUrl		= null;
 	public $bkgClass	= null;
+	public $bkgLazy		= false;
 
 	// Texture
 	public $texture			= false;

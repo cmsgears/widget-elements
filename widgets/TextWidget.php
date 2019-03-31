@@ -15,14 +15,12 @@ use Yii;
 // CMG Imports
 use cmsgears\cms\common\config\CmsGlobal;
 
-use cmsgears\widgets\elements\base\ObjectWidget;
-
 /**
  * TextWidget dynamically show the widget model.
  *
  * @since 1.0.0
  */
-class TextWidget extends ObjectWidget {
+class TextWidget extends \cmsgears\widgets\elements\base\ObjectWidget {
 
 	// Variables ---------------------------------------------------
 
@@ -44,6 +42,7 @@ class TextWidget extends ObjectWidget {
 	public $bkg			= false;
 	public $bkgUrl		= null;
 	public $bkgClass	= null;
+	public $bkgLazy		= false;
 
 	// Texture
 	public $texture			= false;

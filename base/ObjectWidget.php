@@ -54,11 +54,25 @@ abstract class ObjectWidget extends Widget {
 	public $defaultAvatar = false;
 
 	/**
+	 * Check whether avatar can be lazy loaded.
+	 *
+	 * @var boolean
+	 */
+	public $lazyAvatar = false;
+
+	/**
 	 * Check whether default banner can be used in absence of model banner.
 	 *
 	 * @var boolean
 	 */
 	public $defaultBanner = false;
+
+	/**
+	 * Check whether banner can be lazy loaded.
+	 *
+	 * @var boolean
+	 */
+	public $lazyBanner = false;
 
 	/**
 	 *

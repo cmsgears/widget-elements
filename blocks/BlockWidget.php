@@ -15,14 +15,12 @@ use Yii;
 // CMG Imports
 use cmsgears\cms\common\config\CmsGlobal;
 
-use cmsgears\widgets\elements\base\ObjectWidget;
-
 /**
  * BlockWidget dynamically show the block model.
  *
  * @since 1.0.0
  */
-class BlockWidget extends ObjectWidget {
+class BlockWidget extends \cmsgears\widgets\elements\base\ObjectWidget {
 
 	// Variables ---------------------------------------------------
 
