@@ -61,6 +61,13 @@ abstract class ObjectWidget extends Widget {
 	public $lazyAvatar = false;
 
 	/**
+	 * Check whether avatar can be responsive.
+	 *
+	 * @var boolean
+	 */
+	public $resAvatar = false;
+
+	/**
 	 * Check whether default banner can be used in absence of model banner.
 	 *
 	 * @var boolean
@@ -73,6 +80,13 @@ abstract class ObjectWidget extends Widget {
 	 * @var boolean
 	 */
 	public $lazyBanner = false;
+
+	/**
+	 * Check whether banner can be responsive.
+	 *
+	 * @var boolean
+	 */
+	public $resBanner = false;
 
 	/**
 	 *
