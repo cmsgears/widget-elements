@@ -45,6 +45,8 @@ class BlockWidget extends \cmsgears\widgets\elements\base\ObjectWidget {
 	public $parallaxBkg	= false;
 	public $bkgUrl		= null;
 	public $bkgClass	= null;
+	public $bkgVideo	= false;
+	public $bkgVideoSrc	= null;
 
 	// Texture
 	public $texture			= false;

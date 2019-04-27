@@ -42,6 +42,8 @@ class SidebarWidget extends \cmsgears\widgets\elements\base\ObjectWidget {
 	public $bkg			= false;
 	public $bkgUrl		= null;
 	public $bkgClass	= null;
+	public $bkgVideo	= false;
+	public $bkgVideoSrc	= null;
 	public $bkgLazy		= false;
 
 	// Texture
