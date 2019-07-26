@@ -17,7 +17,7 @@ use cmsgears\cms\common\config\CmsGlobal;
  *
  * @since 1.0.0
  */
-class BlockSuggest extends ObjectSuggest {
+class BlockSuggest extends \cmsgears\core\common\widgets\mappers\ObjectSuggest {
 
 	// Variables ---------------------------------------------------
 

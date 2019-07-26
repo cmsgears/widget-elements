@@ -14,7 +14,7 @@ namespace cmsgears\widgets\elements\mappers;
  *
  * @since 1.0.0
  */
-class LinkSuggest extends ObjectSuggest {
+class LinkSuggest extends \cmsgears\core\common\widgets\mappers\ObjectSuggest {
 
 	// Variables ---------------------------------------------------
 
