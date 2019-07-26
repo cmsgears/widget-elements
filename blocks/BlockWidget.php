@@ -20,7 +20,7 @@ use cmsgears\cms\common\config\CmsGlobal;
  *
  * @since 1.0.0
  */
-class BlockWidget extends \cmsgears\widgets\elements\base\ObjectWidget {
+class BlockWidget extends \cmsgears\core\common\base\ObjectWidget {
 
 	// Variables ---------------------------------------------------
 
