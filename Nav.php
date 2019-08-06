@@ -190,7 +190,7 @@ class Nav extends BasicNav {
 
 							if( $address == $baseUrl ) {
 
-								$item[ 'options' ] = [ 'class' => 'active1' ];
+								$item[ 'options' ] = [ 'class' => 'active' ];
 							}
 
 							$this->items[] = $item;
