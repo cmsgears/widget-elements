@@ -36,7 +36,7 @@ class BlockWidget extends \cmsgears\core\common\base\ObjectWidget {
 
 	// Public -----------------
 
-	public $options = [ 'class' => 'block' ];
+	public $options = [ 'class' => 'cmt-block block' ];
 
 	// Background
 	public $bkg			= false;
