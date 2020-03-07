@@ -16,14 +16,12 @@ use yii\helpers\Url;
 // CMG Imports
 use cmsgears\cms\common\config\CmsGlobal;
 
-use cmsgears\widgets\nav\BasicNav;
-
 /**
  * Nav widget dynamically show the menu model.
  *
  * @since 1.0.0
  */
-class Nav extends BasicNav {
+class Nav extends \cmsgears\widgets\nav\BasicNav {
 
 	// Variables ---------------------------------------------------
 
@@ -78,7 +76,7 @@ class Nav extends BasicNav {
 
     public function renderWidget( $config = [] ) {
 
-		$user		= Yii::$app->user->getIdentity();
+		$user		= Yii::$app->core->getUser();
 		$menu 		= $this->menuService->getBySlugType( $this->slug, CmsGlobal::TYPE_MENU );
 		$pageSlug	= Yii::$app->request->get( 'slug' );
 
@@ -169,7 +167,7 @@ class Nav extends BasicNav {
 									$link->url = substr( $link->url, 1 );
 								}
 
-								$address = Url::toRoute( [ "/$link->url" ], true );
+								$address = !empty( $link->url ) ? Url::toRoute( [ "/$link->url" ], true ) : null;
 							}
 
 							$item = [ 'url' => $address, 'label' => $label, 'icon' => $link->icon ];
@@ -203,6 +201,6 @@ class Nav extends BasicNav {
 		return parent::renderWidget();
     }
 
-	// DynamicNav ----------------------------
+	// Nav -----------------------------------
 
 }
