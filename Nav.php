@@ -107,7 +107,7 @@ class Nav extends \cmsgears\widgets\nav\BasicNav {
 				$icon		= $link->icon;
 				$address	= null;
 
-				if( isset( $link->pageId ) ) {
+				if( $link->active && isset( $link->pageId ) ) {
 
 					$page	= $pages[ $link->pageId ];
 					$label	= empty( $link->title ) ? $page->name : $link->title;
@@ -144,7 +144,7 @@ class Nav extends \cmsgears\widgets\nav\BasicNav {
 						$this->items[] = $item;
 					}
 				}
-				else {
+				else if( $link->active ) {
 
 					$item		= null;
 					$address	= null;
@@ -162,7 +162,7 @@ class Nav extends \cmsgears\widgets\nav\BasicNav {
 							else {
 
 								// Clean URL if first character is slash
-								if( substr( $link->url, 0, 1 ) == '/' ) {
+								if( $link->url != '/' && substr( $link->url, 0, 1 ) == '/' ) {
 
 									$link->url = substr( $link->url, 1 );
 								}
