@@ -89,8 +89,12 @@ class BlockWidget extends \cmsgears\core\common\base\ObjectWidget {
 	public $metaWrapClass = null;
 
 	// Block Elements
-	public $elements		= false;
-	public $elementType		= null;
+	public $elements	= false;
+	public $elementType	= null;
+
+	// Block Widgets
+	public $widgets		= false;
+	public $widgetType	= null;
 
 	public $boxWrapClass	= null;
 	public $boxWrapper		= null;
