@@ -96,7 +96,7 @@ class Nav extends \cmsgears\widgets\nav\BasicNav {
 			}
 
 			// Get menu pages map
-			$pages		= $this->pageService->getMenuPages( $pageIds, true );
+			$pages		= $this->pageService->getModelMapByIds( $pageIds );
 			$baseUrl	= Yii::$app->request->absoluteUrl;
 
 			// Generate Links
@@ -152,7 +152,7 @@ class Nav extends \cmsgears\widgets\nav\BasicNav {
 
 					if( strlen( $label ) > 0 ) {
 
-						if( !$link->user || ( isset( $user ) ) ) {
+						if( !$link->private || ( isset( $user ) ) ) {
 
 							if( $link->absolute ) {
 
