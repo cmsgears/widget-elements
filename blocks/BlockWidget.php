@@ -47,6 +47,7 @@ class BlockWidget extends \cmsgears\core\common\base\ObjectWidget {
 	public $bkgClass	= null;
 	public $bkgVideo	= false;
 	public $bkgVideoSrc	= null;
+	public $bkgHeader	= false;
 
 	// Texture
 	public $texture			= false;
@@ -60,6 +61,7 @@ class BlockWidget extends \cmsgears\core\common\base\ObjectWidget {
 	public $headerTitle		= null;
 	public $headerInfo		= null;
 	public $headerContent	= null;
+	public $headerClass		= null;
 
 	// Content
 	public $content			= false;
