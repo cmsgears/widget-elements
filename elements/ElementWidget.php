@@ -15,14 +15,12 @@ use Yii;
 // CMG Imports
 use cmsgears\cms\common\config\CmsGlobal;
 
-use cmsgears\widgets\elements\base\ObjectWidget;
-
 /**
  * ElementWidget dynamically show the element model.
  *
  * @since 1.0.0
  */
-class ElementWidget extends ObjectWidget {
+class ElementWidget extends \cmsgears\core\common\base\ObjectWidget {
 
 	// Variables ---------------------------------------------------
 
@@ -44,6 +42,8 @@ class ElementWidget extends ObjectWidget {
 	public $bkg			= false;
 	public $bkgUrl		= null;
 	public $bkgClass	= null;
+	public $bkgVideo	= false;
+	public $bkgVideoSrc	= null;
 
 	// Texture
 	public $texture			= false;

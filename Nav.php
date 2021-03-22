@@ -16,14 +16,12 @@ use yii\helpers\Url;
 // CMG Imports
 use cmsgears\cms\common\config\CmsGlobal;
 
-use cmsgears\widgets\nav\BasicNav;
-
 /**
  * Nav widget dynamically show the menu model.
  *
  * @since 1.0.0
  */
-class Nav extends BasicNav {
+class Nav extends \cmsgears\widgets\nav\BasicNav {
 
 	// Variables ---------------------------------------------------
 
@@ -78,7 +76,7 @@ class Nav extends BasicNav {
 
     public function renderWidget( $config = [] ) {
 
-		$user		= Yii::$app->user->getIdentity();
+		$user		= Yii::$app->core->getUser();
 		$menu 		= $this->menuService->getBySlugType( $this->slug, CmsGlobal::TYPE_MENU );
 		$pageSlug	= Yii::$app->request->get( 'slug' );
 
@@ -98,7 +96,7 @@ class Nav extends BasicNav {
 			}
 
 			// Get menu pages map
-			$pages		= $this->pageService->getMenuPages( $pageIds, true );
+			$pages		= $this->pageService->getModelMapByIds( $pageIds );
 			$baseUrl	= Yii::$app->request->absoluteUrl;
 
 			// Generate Links
@@ -109,7 +107,7 @@ class Nav extends BasicNav {
 				$icon		= $link->icon;
 				$address	= null;
 
-				if( isset( $link->pageId ) ) {
+				if( $link->active && isset( $link->pageId ) ) {
 
 					$page	= $pages[ $link->pageId ];
 					$label	= empty( $link->title ) ? $page->name : $link->title;
@@ -146,7 +144,7 @@ class Nav extends BasicNav {
 						$this->items[] = $item;
 					}
 				}
-				else {
+				else if( $link->active ) {
 
 					$item		= null;
 					$address	= null;
@@ -154,7 +152,7 @@ class Nav extends BasicNav {
 
 					if( strlen( $label ) > 0 ) {
 
-						if( !$link->user || ( isset( $user ) ) ) {
+						if( !$link->private || ( isset( $user ) ) ) {
 
 							if( $link->absolute ) {
 
@@ -164,12 +162,12 @@ class Nav extends BasicNav {
 							else {
 
 								// Clean URL if first character is slash
-								if( substr( $link->url, 0, 1 ) == '/' ) {
+								if( $link->url != '/' && substr( $link->url, 0, 1 ) == '/' ) {
 
 									$link->url = substr( $link->url, 1 );
 								}
 
-								$address = Url::toRoute( [ "/$link->url" ], true );
+								$address = !empty( $link->url ) ? Url::toRoute( [ "/$link->url" ], true ) : null;
 							}
 
 							$item = [ 'url' => $address, 'label' => $label, 'icon' => $link->icon ];
@@ -190,7 +188,7 @@ class Nav extends BasicNav {
 
 							if( $address == $baseUrl ) {
 
-								$item[ 'options' ] = [ 'class' => 'active1' ];
+								$item[ 'options' ] = [ 'class' => 'active' ];
 							}
 
 							$this->items[] = $item;
@@ -203,6 +201,6 @@ class Nav extends BasicNav {
 		return parent::renderWidget();
     }
 
-	// DynamicNav ----------------------------
+	// Nav -----------------------------------
 
 }

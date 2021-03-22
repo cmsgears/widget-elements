@@ -15,14 +15,12 @@ use Yii;
 // CMG Imports
 use cmsgears\cms\common\config\CmsGlobal;
 
-use cmsgears\widgets\elements\base\ObjectWidget;
-
 /**
  * BlockWidget dynamically show the block model.
  *
  * @since 1.0.0
  */
-class BlockWidget extends ObjectWidget {
+class BlockWidget extends \cmsgears\core\common\base\ObjectWidget {
 
 	// Variables ---------------------------------------------------
 
@@ -38,7 +36,7 @@ class BlockWidget extends ObjectWidget {
 
 	// Public -----------------
 
-	public $options = [ 'class' => 'block' ];
+	public $options = [ 'class' => 'cmt-block block' ];
 
 	// Background
 	public $bkg			= false;
@@ -47,6 +45,9 @@ class BlockWidget extends ObjectWidget {
 	public $parallaxBkg	= false;
 	public $bkgUrl		= null;
 	public $bkgClass	= null;
+	public $bkgVideo	= false;
+	public $bkgVideoSrc	= null;
+	public $bkgHeader	= false;
 
 	// Texture
 	public $texture			= false;
@@ -60,6 +61,7 @@ class BlockWidget extends ObjectWidget {
 	public $headerTitle		= null;
 	public $headerInfo		= null;
 	public $headerContent	= null;
+	public $headerClass		= null;
 
 	// Content
 	public $content			= false;
@@ -89,8 +91,12 @@ class BlockWidget extends ObjectWidget {
 	public $metaWrapClass = null;
 
 	// Block Elements
-	public $elements		= false;
-	public $elementType		= null;
+	public $elements	= false;
+	public $elementType	= null;
+
+	// Block Widgets
+	public $widgets		= false;
+	public $widgetType	= null;
 
 	public $boxWrapClass	= null;
 	public $boxWrapper		= null;
